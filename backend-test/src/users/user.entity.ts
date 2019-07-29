@@ -1,12 +1,12 @@
-import {Entity, Column, BeforeInsert, ObjectIdColumn} from 'typeorm';
-import { IsEmail, Validate } from 'class-validator';
+import {Entity, Column, BeforeInsert, ObjectIdColumn, BeforeUpdate} from 'typeorm';
+import { IsEmail } from 'class-validator';
 import * as bcrypt from 'bcrypt';
 
 @Entity('user')
 export class UserEntity {
 
-    @ObjectIdColumn()
-    _id: number;
+  @ObjectIdColumn()
+  _id: number;
 
   @Column()
   username: string;
@@ -19,15 +19,8 @@ export class UserEntity {
   password: string;
 
   @BeforeInsert()
-  hashPassword() {
-    bcrypt.genSalt(10, (err, salt) => {
-
-        if (err) { return err; }
-
-        bcrypt.hash(this.password, salt, (err, hash) => {
-            if (err) { return err; }
-            this.password = hash;
-        });
-    });
+  async hashPassword() {
+    this.password = await bcrypt.hash(this.password, 10);
   }
+
 }
