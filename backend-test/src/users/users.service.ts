@@ -18,6 +18,12 @@ export class UsersService {
     }
 
     async create(createUserDto: CreateUserDto) {
+        const user = await this.findOneByEmail(createUserDto.email);
+
+        if (user) {
+            throw new HttpException('User already exists', HttpStatus.BAD_REQUEST);
+        }
+
         const newUser = new UserEntity();
         newUser.email = createUserDto.email;
         newUser.password = createUserDto.password;
