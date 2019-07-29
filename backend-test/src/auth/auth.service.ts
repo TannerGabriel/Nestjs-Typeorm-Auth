@@ -4,6 +4,7 @@ import { LoginUserDto } from '../users/dto/login-user.dto';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { JwtPayload } from './interfaces/jwt-payload.interface';
+import { Resolver } from 'dns';
 
 @Injectable()
 export class AuthService {
@@ -27,12 +28,12 @@ export class AuthService {
     }
 
     async checkPassword(password: string, user): Promise<boolean> {
-        let state = false;
-        await bcrypt.compare(password, user.password, (err, isMatch) => {
-            if (err) { return err; }
-            state =  isMatch;
+        return new Promise(async (resolve) => {
+            await bcrypt.compare(password, user.password, async (err, isMatch) => {
+                if (err) { return err; }
+                resolve(isMatch);
+            });
         });
-        return state;
     }
 
     createJwtPayload(user) {
