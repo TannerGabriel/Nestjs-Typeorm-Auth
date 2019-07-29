@@ -21,7 +21,6 @@ export class AuthService {
             if (state) {
                 resolve(this.createJwtPayload(user));
             } else {
-                console.log('error');
                 resolve(new HttpException('Wrong credantials', HttpStatus.UNAUTHORIZED));
             }
         });
