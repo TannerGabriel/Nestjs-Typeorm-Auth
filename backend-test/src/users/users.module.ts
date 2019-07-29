@@ -8,7 +8,7 @@ import { UserEntity } from './user.entity';
 @Module({
   imports: [
     PassportModule.register({ defaultStrategy: 'jwt', session: false }),
-    // TypeOrmModule.forFeature([UserEntity]),
+    TypeOrmModule.forFeature([UserEntity]),
   ],
   controllers: [UsersController],
   providers: [UsersService],

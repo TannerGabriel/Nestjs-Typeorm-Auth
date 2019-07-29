@@ -12,7 +12,7 @@ import { UsersModule } from './users/users.module';
     database: 'test',
     entities: [join(__dirname, '**/**.entity{.ts,.js}')],
     synchronize: true,
-  })],
+  }), UsersModule],
   controllers: [AppController],
   providers: [AppService],
 })

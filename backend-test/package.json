@@ -1,5 +1,5 @@
 {
-  "name": "backend",
+  "name": "backend-test",
   "version": "0.0.1",
   "description": "",
   "author": "",
@@ -29,7 +29,6 @@
     "bcrypt": "^3.0.6",
     "class-validator": "^0.9.1",
     "mongodb": "^3.3.0-beta2",
-    "mysql": "^2.17.1",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "reflect-metadata": "^0.1.12",
