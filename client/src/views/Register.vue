@@ -5,7 +5,7 @@
       <b-form @submit="onSubmit" @reset="onReset" v-if="show">
         <b-form-group id="input-group-1" label="Email address:" label-for="input-1">
           <b-form-input
-            id="input-1"
+            id="email"
             v-model="form.email"
             type="email"
             required
