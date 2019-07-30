@@ -44,14 +44,13 @@ export default class Login extends Vue {
   show = true;
   success = 0;
 
-
   onSubmit(evt) {
     evt.preventDefault();
     axios.post('http://localhost:3000/auth', this.form).then((response) => {
       if(response.status == 201) {
         this.success = 2
         setTimeout(() => {
-          this.$router.push({ name: 'home', params: { token: response.data.token } })
+          this.$router.push({ name: 'home'})
           localStorage.token = response.data.token 
         }, 2000);
       } else {

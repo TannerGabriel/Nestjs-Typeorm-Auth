@@ -11,9 +11,8 @@ import { validateToken } from '../utils/checkToken'
 @Component({})
 export default class Home extends Vue {
   async mounted() {
-    console.log(localStorage.token)
     const state = await validateToken(localStorage.token)
-    console.log(state)
+    if(state == false) this.$router.push({ name: 'login'})
   }
 }
 </script>
