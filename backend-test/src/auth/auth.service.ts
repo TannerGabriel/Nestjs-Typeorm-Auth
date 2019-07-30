@@ -4,7 +4,8 @@ import { LoginUserDto } from '../users/dto/login-user.dto';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { JwtPayload } from './interfaces/jwt-payload.interface';
-import { Resolver } from 'dns';
+
+const EXPIRES_IN = 3600;
 
 @Injectable()
 export class AuthService {
@@ -44,7 +45,7 @@ export class AuthService {
         const jwt = this.jwtService.sign(data);
 
         return {
-            expiresIn: 3600,
+            expiresIn: EXPIRES_IN,
             token: jwt,
         };
     }
