@@ -1,7 +1,8 @@
-import { Controller, Post, Body, Get, Delete, Param } from '@nestjs/common';
+import { Controller, Post, Body, Get, Delete, Param, UseGuards, Put } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UsersService } from './users.service';
 import { User } from './user.interface';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('users')
 export class UsersController {
@@ -25,5 +26,11 @@ export class UsersController {
     @Delete(':id')
     async deleteUserById(@Param('id') id: number) {
         return this.usersService.deleteUserById(id);
+    }
+
+    @Put('test')
+    @UseGuards(AuthGuard('jwt'))
+    testAuthRoute() {
+        return 'Hello authentificated user';
     }
 }

@@ -8,7 +8,7 @@ import { PassportModule } from '@nestjs/passport';
 import 'dotenv/config';
 
 @Module({
-  imports: [PassportModule.register({ defaultStrategy: 'jwt', session: false }),
+  imports: [PassportModule.register({ defaultStrategy: 'jwt', session: true }),
   JwtModule.register({
     secret: process.env.SECRET_KEY,
     signOptions: {
