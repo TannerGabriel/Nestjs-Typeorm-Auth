@@ -18,14 +18,20 @@ export class AuthService {
             throw new UnauthorizedException ('User does not exist');
         }
 
-        return new Promise(async (resolve) => {
+        const promise = await new Promise(async (resolve) => {
             const state = await this.checkPassword(loginUserDto.password, user);
             if (state) {
                 resolve(this.createJwtPayload(user));
             } else {
-                resolve(new HttpException('Wrong credentials', HttpStatus.UNAUTHORIZED));
+                resolve({status: 401});
             }
         });
+
+        if (promise.status != 401) {
+            return promise;
+        } else {
+            throw new HttpException('Wrong credentials', HttpStatus.UNAUTHORIZED);
+        }
     }
 
     async checkPassword(password: string, user): Promise<boolean> {
@@ -58,6 +64,5 @@ export class AuthService {
         } else {
             throw new UnauthorizedException();
         }
-
     }
 }

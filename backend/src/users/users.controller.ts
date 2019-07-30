@@ -20,7 +20,7 @@ export class UsersController {
         return this.usersService.findAll();
     }
 
-    @Get(':email')
+    @Get('get/:email')
     async getUserByEmail(@Param('email') email: string): Promise<User> {
         return this.usersService.findOneByEmail(email);
     }
@@ -30,9 +30,9 @@ export class UsersController {
         return this.usersService.deleteUserById(id);
     }
 
-    @Put('test')
+    @Get('authstate')
     @UseGuards(AuthGuard('jwt'))
     testAuthRoute() {
-        return 'Hello authentificated user';
+        return 'authenticated';
     }
 }
