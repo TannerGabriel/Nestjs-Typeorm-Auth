@@ -1,5 +1,6 @@
 <template>
   <div class="about">
+    <b-alert variant="success" :show="success">Successfully registered</b-alert>
     <b-container>
       <b-form @submit="onSubmit" @reset="onReset" v-if="show">
         <b-form-group id="input-group-1" label="Email address:" label-for="input-1">
@@ -35,6 +36,7 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
+import axios from 'axios'
 
 @Component({
   components: {},
@@ -46,10 +48,19 @@ export default class Register extends Vue {
     name: ""
   };
   show = true;
+  success = 0;
 
   onSubmit(evt) {
     evt.preventDefault();
-    alert(JSON.stringify(this.form));
+    axios.post('http://localhost:3000/users', this.form).then(() => {
+      this.success = 2
+
+      setTimeout(() => {
+        this.$router.push('/')
+      }, 2000);
+    }).catch((error) => {
+      alert(error)
+    })
   }
 
   onReset(evt) {
