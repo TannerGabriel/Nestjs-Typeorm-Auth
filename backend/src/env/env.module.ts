@@ -9,6 +9,6 @@ import { EnvService } from './env.service';
       useValue: new EnvService(),
     },
   ],
-  exports: [ EnvService ],
+  exports: [EnvService],
 })
 export class EnvModule {}
