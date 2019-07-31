@@ -1,8 +1,8 @@
 <template>
-  <section>
+  <section class="auth">
     <b-alert variant="success" :show="success">Successfully logged in</b-alert>
     <b-container class="auth-container">
-      <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+      <b-form @submit="onSubmit" v-if="show">
         <b-form-group id="input-group-1" label="Login" label-for="login">
           <b-form-input
             id="email"
@@ -41,7 +41,7 @@ export default class Login extends Vue {
   show = true;
   success = 0;
 
-  onSubmit(evt) {
+  onSubmit(evt: Event) {
     evt.preventDefault();
     axios.post('http://localhost:3000/auth', this.form).then((response) => {
       if(response.status == 201) {

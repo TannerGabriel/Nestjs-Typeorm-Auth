@@ -2,7 +2,7 @@
   <div class="about">
     <b-alert variant="success" :show="success">Successfully registered</b-alert>
     <b-container class="auth-container">
-      <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+      <b-form @submit="onSubmit" v-if="show">
         <b-form-group id="register" label-for="Register" label="Register">
           <b-form-input
             id="email"
@@ -22,7 +22,6 @@
           <b-input id="input-2" v-model="form.name" required placeholder="Enter name"></b-input>
         </b-form-group>
         
-
         <b-button type="submit" variant="primary">Submit</b-button>
       </b-form>
     </b-container>
@@ -45,11 +44,11 @@ export default class Register extends Vue {
   show = true;
   success = 0;
 
-  onSubmit(evt) {
+  onSubmit(evt: Event) {
     evt.preventDefault();
     axios.post('http://localhost:3000/users', this.form).then((response) => {
       this.success = 2
-
+      console.log('test')
       setTimeout(() => {
         this.$router.push('/')
         localStorage.token = response.data.token.token 
