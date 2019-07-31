@@ -1,15 +1,13 @@
 import { Injectable, UnauthorizedException, HttpStatus, HttpException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { LoginUserDto } from '../users/dto/login-user.dto';
-import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
+import { JwtPayloadService } from '../shared/jwt.payload.service';
 import { JwtPayload } from './interfaces/jwt-payload.interface';
-
-const EXPIRES_IN = 3600;
 
 @Injectable()
 export class AuthService {
-    constructor(private usersService: UsersService, private jwtService: JwtService) {}
+    constructor(private usersService: UsersService, private readonly jwtPayloadService: JwtPayloadService) {}
 
     async validateUserByPassword(loginUserDto: LoginUserDto) {
         const user = await this.usersService.findOneByEmail(loginUserDto.email);
@@ -21,7 +19,7 @@ export class AuthService {
         const promise = await new Promise(async (resolve) => {
             const state = await this.checkPassword(loginUserDto.password, user);
             if (state) {
-                resolve(this.createJwtPayload(user));
+                resolve(this.jwtPayloadService.createJwtPayload(user));
             } else {
                 resolve({status: 401});
             }
@@ -43,26 +41,14 @@ export class AuthService {
         });
     }
 
-    createJwtPayload(user) {
-        const data: JwtPayload = {
-            email: user.email,
-        };
-
-        const jwt = this.jwtService.sign(data);
-
-        return {
-            expiresIn: EXPIRES_IN,
-            token: jwt,
-        };
-    }
-
     async validateUserByJwt(payload: JwtPayload) {
         const user = await this.usersService.findOneByEmail(payload.email);
 
         if (user) {
-            return this.createJwtPayload(user);
+            return this.jwtPayloadService.createJwtPayload(user);
         } else {
             throw new UnauthorizedException();
         }
     }
+
 }
