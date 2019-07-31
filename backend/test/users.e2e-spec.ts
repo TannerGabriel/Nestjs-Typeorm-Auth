@@ -17,7 +17,8 @@ describe('UserController (e2e)', () => {
   });
 
   afterAll(async () => {
-    return request(app.getHttpServer()).delete('/users');
+    request(app.getHttpServer()).delete('/users');
+    app.close();
   });
 
   const user: CreateUserDto = {
@@ -40,10 +41,33 @@ describe('UserController (e2e)', () => {
 
   it('get users', () => {
     return request(app.getHttpServer())
-      .get('/users')
+      .get('/users/')
       .expect(200)
       .expect(({ body }) => {
         expect(body).toBeDefined();
       });
+  });
+
+  it('Should requect duplicated repo', () => {
+    return request(app.getHttpServer())
+    .post('/users')
+    .set('Accept', 'application/json')
+    .send(user)
+    .expect(({ body }) => {
+        expect(body.message).toEqual('User already exists');
+      })
+      .expect(HttpStatus.BAD_REQUEST);
+  });
+
+  it('get repo', () => {
+    return request(app.getHttpServer())
+    .get(`/users/get/${user.email}`)
+    .expect(200)
+    .expect(({body}) => {
+        expect(body).toBeDefined();
+        expect(body.email).toEqual(user.email);
+        expect(body._id).toBeDefined();
+        expect(body.password).toBeDefined();
+    });
   });
 });
