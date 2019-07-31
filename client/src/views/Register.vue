@@ -1,6 +1,9 @@
 <template>
   <div class="about">
     <b-alert variant="success" :show="success">Successfully registered</b-alert>
+    <b-alert variant="danger" :show="errorState">
+      {{errorMessage}}
+    </b-alert>
     <b-container class="auth-container">
       <b-form @submit="onSubmit" v-if="show">
         <b-form-group id="register" label-for="Register" label="Register">
@@ -44,6 +47,8 @@ export default class Register extends Vue {
   };
   show = true;
   success = 0;
+  errorState = 0;
+  errorMessage = ''
 
   onSubmit(evt: Event) {
     evt.preventDefault();
@@ -55,7 +60,8 @@ export default class Register extends Vue {
         localStorage.token = response.data.token.token 
       }, 2000);
     }).catch((error) => {
-      alert(error)
+      this.errorMessage = `${error.message}: ${error.response.data.message}`
+      this.errorState = 4
     })
   }
 }

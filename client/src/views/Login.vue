@@ -1,6 +1,9 @@
 <template>
   <section class="auth">
     <b-alert variant="success" :show="success">Successfully logged in</b-alert>
+    <b-alert variant="danger" :show="errorState">
+      {{errorMessage}}
+    </b-alert>
     <b-container class="auth-container">
       <b-form @submit="onSubmit" v-if="show">
         <b-form-group id="input-group-1" label="Login" label-for="login">
@@ -41,6 +44,8 @@ export default class Login extends Vue {
   };
   show = true;
   success = 0;
+  errorState = 0;
+  errorMessage = ''
 
   onSubmit(evt: Event) {
     evt.preventDefault();
@@ -56,7 +61,8 @@ export default class Login extends Vue {
       }
       
     }).catch((error) => {
-      alert(error)
+      this.errorMessage = `${error.message}: ${error.response.data.message}`
+      this.errorState = 4
     })
   }
 }
