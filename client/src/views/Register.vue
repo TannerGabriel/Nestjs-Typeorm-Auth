@@ -17,6 +17,7 @@
             id="text-password"
             aria-describedby="password-help-block"
             placeholder="Password"
+            required
             v-model="form.password"
           ></b-input>
           <b-input id="input-2" v-model="form.name" required placeholder="Enter name"></b-input>
