@@ -8,18 +8,22 @@ import { AuthModule } from './auth/auth.module';
 import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { HttpExceptionFilter } from './shared/http-exception.filter';
 import { LoggingInterceptor } from './shared/logging.interceptor';
+import { DatabaseModule } from './database/database.module';
+import { EnvModule } from './env/env.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'mongodb',
-      host: 'localhost',
-      database: 'test',
-      entities: [join(__dirname, '**/**.entity{.ts,.js}')],
-      synchronize: true,
-    }),
+    // TypeOrmModule.forRoot({
+    //   type: 'mongodb',
+    //   host: 'localhost',
+    //   database: 'test',
+    //   entities: [join(__dirname, '**/**.entity{.ts,.js}')],
+    //   synchronize: true,
+    // }),
     UsersModule,
     AuthModule,
+    DatabaseModule,
+    EnvModule,
   ],
   controllers: [AppController],
   providers: [
