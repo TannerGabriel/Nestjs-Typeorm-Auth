@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { JwtPayload } from '../auth/interfaces/jwt-payload.interface';
 
@@ -13,7 +13,12 @@ export class JwtPayloadService {
             email: user.email,
         };
 
-        const jwt = this.jwtService.sign(data);
+        let jwt;
+        try {
+            jwt = this.jwtService.sign(data);
+        } catch (error) {
+            throw new HttpException('Internal Server error', HttpStatus.INTERNAL_SERVER_ERROR);
+        }
 
         return {
             expiresIn: EXPIRES_IN,

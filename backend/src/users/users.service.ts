@@ -4,10 +4,12 @@ import { UserEntity } from './user.entity';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './user.interface';
+import { JwtPayloadService } from '../shared/jwt.payload.service';
 
 @Injectable()
 export class UsersService {
-    constructor(@InjectRepository(UserEntity) private readonly userRepository: Repository<UserEntity>) {}
+    constructor(@InjectRepository(UserEntity) private readonly userRepository: Repository<UserEntity>,
+                private readonly jwtPayloadService: JwtPayloadService) {}
 
     async findAll(): Promise<User[]> {
         return await this.userRepository.find();
@@ -28,7 +30,10 @@ export class UsersService {
         newUser.email = createUserDto.email;
         newUser.password = createUserDto.password;
 
-        return await this.userRepository.save(newUser);
+        const userResponse = await this.userRepository.save(newUser);
+        const token = await this.jwtPayloadService.createJwtPayload(newUser);
+
+        return { userResponse, token };
     }
 
     async deleteUserById(id: number) {

@@ -52,11 +52,12 @@ export default class Register extends Vue {
 
   onSubmit(evt) {
     evt.preventDefault();
-    axios.post('http://localhost:3000/users', this.form).then(() => {
+    axios.post('http://localhost:3000/users', this.form).then((response) => {
       this.success = 2
 
       setTimeout(() => {
         this.$router.push('/')
+        localStorage.token = response.data.token.token 
       }, 2000);
     }).catch((error) => {
       alert(error)

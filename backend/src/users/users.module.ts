@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEntity } from './user.entity';
 import { JwtPayloadService } from '../shared/jwt.payload.service';
 import { JwtModule } from '@nestjs/jwt';
+import 'dotenv/config';
 
 @Module({
   imports: [
