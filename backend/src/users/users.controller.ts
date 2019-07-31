@@ -25,6 +25,11 @@ export class UsersController {
         return this.usersService.findOneByEmail(email);
     }
 
+    @Delete()
+    async deleteAllUsers() {
+        return this.usersService.deleteAll();
+    }
+
     @Delete(':id')
     async deleteUserById(@Param('id') id: number) {
         return this.usersService.deleteUserById(id);

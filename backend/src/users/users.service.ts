@@ -39,4 +39,8 @@ export class UsersService {
     async deleteUserById(id: number) {
         return await this.userRepository.delete(id);
     }
+
+    async deleteAll() {
+        return await this.userRepository.delete({});
+    }
 }

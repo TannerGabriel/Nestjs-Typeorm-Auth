@@ -18,4 +18,4 @@ function DatabaseOrmModule(): DynamicModule {
     DatabaseOrmModule(),
   ],
 })
-export class DatabaseModule { }
+export class DatabaseTestingModule { }
