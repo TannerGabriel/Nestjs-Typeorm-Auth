@@ -33,12 +33,13 @@
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
 import axios from "axios";
+import { validateToken } from '../utils/checkToken'
 
 @Component({
   components: {}
 })
 export default class Login extends Vue {
-   form = {
+  form = {
     email: "",
     password: "",
   };
@@ -59,11 +60,15 @@ export default class Login extends Vue {
       } else {
         alert("Wrong credentials")
       }
-      
     }).catch((error) => {
       this.errorMessage = `${error.message}: ${error.response.data.message}`
       this.errorState = 4
     })
+  }
+
+  async mounted() {
+    const state = await validateToken(localStorage.token)
+    if(state == true) this.$router.push({ name: 'home'})
   }
 }
 </script>
