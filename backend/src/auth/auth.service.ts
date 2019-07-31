@@ -16,7 +16,7 @@ export class AuthService {
             throw new UnauthorizedException ('User does not exist');
         }
 
-        const promise = await new Promise(async (resolve) => {
+        const promise: any = await new Promise(async (resolve) => {
             const state = await this.checkPassword(loginUserDto.password, user);
             if (state) {
                 resolve(this.jwtPayloadService.createJwtPayload(user));
@@ -25,7 +25,7 @@ export class AuthService {
             }
         });
 
-        if (promise.status != 401) {
+        if (promise.status !== 401) {
             return promise;
         } else {
             throw new HttpException('Wrong credentials', HttpStatus.UNAUTHORIZED);
