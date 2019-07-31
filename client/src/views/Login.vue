@@ -1,9 +1,9 @@
 <template>
   <section>
     <b-alert variant="success" :show="success">Successfully logged in</b-alert>
-    <b-container>
+    <b-container class="auth-container">
       <b-form @submit="onSubmit" @reset="onReset" v-if="show">
-        <b-form-group id="input-group-1" label="Email address:" label-for="input-1">
+        <b-form-group id="input-group-1" label="Login" label-for="login">
           <b-form-input
             id="email"
             v-model="form.email"
@@ -11,8 +11,6 @@
             required
             placeholder="Enter email"
           ></b-form-input>
-
-          <label for="text-password">Password</label>
           <b-input
             type="password"
             id="text-password"
@@ -23,7 +21,6 @@
         </b-form-group>
 
         <b-button type="submit" variant="primary">Submit</b-button>
-        <b-button type="reset" variant="danger">Reset</b-button>
       </b-form>
     </b-container>
   </section>
@@ -61,17 +58,30 @@ export default class Login extends Vue {
       alert(error)
     })
   }
-
-  onReset(evt) {
-    evt.preventDefault()
-    // Reset our form values
-    this.form.email = ''
-    this.form.password = ''
-
-    this.show = false
-    this.$nextTick(() => {
-      this.show = true
-    })
-  }
 }
 </script>
+
+<style lang="scss">
+.auth-container {
+  width: 400px;
+  margin-top: 3rem;
+  text-align: center;
+  margin: 8rem auto 0;
+  box-shadow: 0 1rem 1rem 0 rgba(0, 0, 0, .15);
+  background: #fff;
+  position: relative;
+  padding: 6rem 4rem;
+}
+
+body {
+  background: #607D8B;
+}
+
+input {
+  margin: 0.5rem;
+}
+
+label {
+  margin-bottom: 1rem;
+}
+</style>
