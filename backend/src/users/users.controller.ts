@@ -35,6 +35,11 @@ export class UsersController {
         return this.usersService.deleteUserById(id);
     }
 
+    @Put(':id')
+    async updateUser(@Param('id') id: number, @Body() user: CreateUserDto) {
+        return this.usersService.update(id, user);
+    }
+
     @Get('authstate')
     @UseGuards(AuthGuard('jwt'))
     testAuthRoute() {
