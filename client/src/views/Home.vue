@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div v-if="show" class="home">
     <img alt="Vue logo" src="../assets/logo.png">
   </div>
 </template>
@@ -10,9 +10,12 @@ import { validateToken } from '../utils/checkToken'
 
 @Component({})
 export default class Home extends Vue {
+  show = false
+
   async mounted() {
-    const state = await validateToken(localStorage.token)
-    if(state == false) this.$router.push({ name: 'login'})
+    const state = await validateToken(localStorage.token);
+    if(state == false) this.$router.push({ name: 'login'});
+    else this.show = true;
   }
 }
 </script>
