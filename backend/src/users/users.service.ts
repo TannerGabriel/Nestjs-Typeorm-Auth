@@ -36,14 +36,15 @@ export class UsersService {
         return { userResponse, token };
     }
 
-    async update(_id: number, createUserDto: CreateUserDto) {
+    async update(_id: number, newUser: CreateUserDto) {
         const user = await this.userRepository.findOne(_id);
 
         if (user === undefined || user === null) {
             throw new HttpException('User doesn\'t exists', HttpStatus.BAD_REQUEST);
         }
 
-        return await this.userRepository.update(_id, createUserDto);
+        await this.userRepository.merge(user, newUser);
+        return await this.userRepository.save(user);
     }
 
     async deleteUserById(id: number) {

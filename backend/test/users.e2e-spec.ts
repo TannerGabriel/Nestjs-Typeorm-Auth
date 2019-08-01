@@ -17,14 +17,21 @@ describe('UserController (e2e)', () => {
   });
 
   afterAll(async () => {
-    request(app.getHttpServer()).delete('/users');
+    await request(app.getHttpServer()).delete('/users');
     app.close();
   });
 
   const user: CreateUserDto = {
-    email: 'test@test.com',
+    email: 'test1@test.com',
     password: '!somepassword123!',
   };
+
+  const updatedUser: CreateUserDto = {
+    email: 'deom@test.com',
+    password: '!somenewgreatpassword123!',
+  };
+
+  let userId: string;
 
   it('Create User', () => {
     return request(app.getHttpServer())
@@ -35,11 +42,12 @@ describe('UserController (e2e)', () => {
         expect(body.userResponse.email).toEqual(user.email);
         expect(body.userResponse._id).toBeDefined();
         expect(body.userResponse.password).toBeDefined();
+        userId = body.userResponse._id;
       })
       .expect(HttpStatus.CREATED);
   });
 
-  it('get users', () => {
+  it('get all users', () => {
     return request(app.getHttpServer())
       .get('/users/')
       .expect(200)
@@ -59,7 +67,7 @@ describe('UserController (e2e)', () => {
       .expect(HttpStatus.BAD_REQUEST);
   });
 
-  it('get repo', () => {
+  it('get user', () => {
     return request(app.getHttpServer())
     .get(`/users/get/${user.email}`)
     .expect(200)
@@ -67,6 +75,20 @@ describe('UserController (e2e)', () => {
         expect(body).toBeDefined();
         expect(body.email).toEqual(user.email);
         expect(body._id).toBeDefined();
+        expect(body.password).toBeDefined();
+    });
+  });
+
+  it('update user', () => {
+    return request(app.getHttpServer())
+    .put(`/users/${userId}`)
+    .send(updatedUser)
+    .expect(200)
+    .expect(({body}) => {
+        expect(body).toBeDefined();
+        expect(body.email).toEqual(updatedUser.email);
+        expect(body._id).toBeDefined();
+        expect(body.password).toBeDefined();
         expect(body.password).toBeDefined();
     });
   });
