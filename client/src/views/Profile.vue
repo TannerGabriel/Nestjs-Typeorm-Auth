@@ -4,7 +4,13 @@
     <b-alert variant="danger" :show="errorState">{{errorMessage}}</b-alert>
     <b-container class="settings-container">
       <h1 class="page-heading">Your settings</h1>
-      <b-form @submit="onSubmit" v-if="show">
+
+      <b-nav tabs>
+        <b-nav-item @click="makeActive('Profile')">Profile</b-nav-item>
+        <b-nav-item @click="makeActive('Password')">Password</b-nav-item>
+      </b-nav>
+
+      <b-form @submit="onSubmit" v-if="show && active == 'Profile'">
         <b-form-group id="name" label-for="name" label="Name">
           <b-form-input id="name" v-model="form.name" type="name" required></b-form-input>
         </b-form-group>
@@ -45,6 +51,7 @@ export default class Login extends Vue {
   errorState = 0;
   errorMessage = "";
   user: User;
+  active: string = "Profile";
 
   onSubmit(evt: Event) {
     evt.preventDefault();
@@ -71,6 +78,10 @@ export default class Login extends Vue {
       this.user = await getUserInformation(payload.email, localStorage.token);
       this.form.email = this.user.email;
     }
+  }
+
+  makeActive(navItemId: string) {
+    this.active = navItemId;
   }
 }
 </script>
