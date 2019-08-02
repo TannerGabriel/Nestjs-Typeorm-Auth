@@ -54,7 +54,7 @@ export default class Login extends Vue {
       .post("http://localhost:3000/auth", this.form)
       .then(response => {
         if (response.status == 201) {
-          this.success = 2;
+          this.success += 2;
           setTimeout(() => {
             this.$router.push({ name: "home" });
             localStorage.token = response.data.token;
@@ -65,7 +65,7 @@ export default class Login extends Vue {
       })
       .catch(error => {
         this.errorMessage = `${error.message}: ${error.response.data.message}`;
-        this.errorState = 4;
+        this.errorState += 4;
       });
   }
 

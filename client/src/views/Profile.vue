@@ -98,25 +98,25 @@ export default class Profile extends Vue {
       this.active === "Password" &&
       this.passwordForm.password === this.passwordForm.secondPassword
     ) {
-      data = this.passwordForm.password;
+      data = this.passwordForm;
     } else if (this.active === "Password") {
       this.errorMessage = "Passwords didn't match";
-      this.errorState = 4;
+      this.errorState += 4;
       return undefined;
     }
 
     axios
-      .put(`http://localhost:3000/users/${this.user._id}`, this.form)
+      .put(`http://localhost:3000/users/${this.user._id}`, data)
       .then(response => {
         if (response.status == 200) {
-          this.success = 2;
+          this.success += 2;
         } else {
           alert("Wrong credentials");
         }
       })
       .catch(error => {
         this.errorMessage = `${error.message}: ${error.response.data.message}`;
-        this.errorState = 4;
+        this.errorState += 4;
       });
   }
 
@@ -134,6 +134,8 @@ export default class Profile extends Vue {
   makeActive(navItemId: string) {
     this.active = navItemId;
   }
+
+  chooseDataToPush() {}
 }
 </script>
 
