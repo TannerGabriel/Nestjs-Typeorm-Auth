@@ -12,7 +12,7 @@
 
       <b-form @submit="onSubmit" v-if="show && active == 'Profile'">
         <b-form-group id="name" label-for="name" label="Name">
-          <b-form-input id="name" v-model="form.name" type="name" required></b-form-input>
+          <b-form-input id="name" v-model="form.username" type="name" required></b-form-input>
         </b-form-group>
 
         <b-form-group id="name" label-for="email" label="Email">
@@ -68,7 +68,7 @@ import {
 })
 export default class Profile extends Vue {
   form = {
-    name: "",
+    username: "",
     email: ""
   };
   passwordForm = {
@@ -89,10 +89,26 @@ export default class Profile extends Vue {
 
   onSubmit(evt: Event) {
     evt.preventDefault();
+
+    let data;
+
+    if (this.active === "Profile") {
+      data = this.form;
+    } else if (
+      this.active === "Password" &&
+      this.passwordForm.password === this.passwordForm.secondPassword
+    ) {
+      data = this.passwordForm.password;
+    } else if (this.active === "Password") {
+      this.errorMessage = "Passwords didn't match";
+      this.errorState = 4;
+      return undefined;
+    }
+
     axios
       .put(`http://localhost:3000/users/${this.user._id}`, this.form)
       .then(response => {
-        if (response.status == 201) {
+        if (response.status == 200) {
           this.success = 2;
         } else {
           alert("Wrong credentials");
@@ -111,7 +127,7 @@ export default class Profile extends Vue {
       const payload: Payload = await getPayloadFromToken(localStorage.token);
       this.user = await getUserInformation(payload.email, localStorage.token);
       this.form.email = this.user.email;
-      this.form.name = this.user.username;
+      this.form.username = this.user.username;
     }
   }
 
