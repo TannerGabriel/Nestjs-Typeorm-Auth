@@ -62,17 +62,10 @@ export default class Login extends Vue {
 
   async mounted() {
     const state = await validateToken(localStorage.token);
-    console.log(state);
     if (state != true) this.$router.push({ name: "login" });
     else {
       const payload: Payload = await getPayloadFromToken(localStorage.token);
-      console.log(payload.email);
-      const userResponse = await getUserInformation(
-        payload.email,
-        localStorage.token
-      );
-      this.user = userResponse.data;
-      console.log(this.user);
+      this.user = await getUserInformation(payload.email, localStorage.token);
     }
   }
 }
