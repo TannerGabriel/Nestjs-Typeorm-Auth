@@ -5,9 +5,11 @@
     <b-container class="settings-container">
       <h1 class="page-heading">Your settings</h1>
       <b-form @submit="onSubmit" v-if="show">
-        <b-form-group id="input-group-1" label-for="settings">
-          <p>Change the details of your profile</p>
-          <b-form-input id="name" v-model="form.name" type="name" :value="'test'" required></b-form-input>
+        <b-form-group id="name" label-for="name" label="Name">
+          <b-form-input id="name" v-model="form.name" type="name" required></b-form-input>
+        </b-form-group>
+
+        <b-form-group id="name" label-for="email" label="Email">
           <b-form-input id="email" v-model="form.email" type="email" required></b-form-input>
         </b-form-group>
 
@@ -34,6 +36,7 @@ import {
 })
 export default class Login extends Vue {
   form = {
+    name: "",
     email: "",
     password: ""
   };
@@ -66,6 +69,7 @@ export default class Login extends Vue {
     else {
       const payload: Payload = await getPayloadFromToken(localStorage.token);
       this.user = await getUserInformation(payload.email, localStorage.token);
+      this.form.email = this.user.email;
     }
   }
 }

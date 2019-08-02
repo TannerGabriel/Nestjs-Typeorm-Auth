@@ -4,7 +4,8 @@
     <b-alert variant="danger" :show="errorState">{{errorMessage}}</b-alert>
     <b-container class="auth-container">
       <b-form @submit="onSubmit" v-if="show">
-        <b-form-group id="register" label-for="Register" label="Register">
+        <h2>Register</h2>
+        <b-form-group id="register" label-for="Register">
           <b-form-input
             id="email"
             v-model="form.email"
@@ -26,6 +27,7 @@
 
         <b-button type="submit" variant="primary">Submit</b-button>
       </b-form>
+      <router-link class="nav-link" to="/login">Login instead</router-link>
     </b-container>
   </div>
 </template>
