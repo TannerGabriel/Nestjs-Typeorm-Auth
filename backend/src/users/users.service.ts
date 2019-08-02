@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './user.interface';
 import { JwtPayloadService } from '../shared/jwt.payload.service';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -40,7 +41,7 @@ export class UsersService {
     return { userResponse, token };
   }
 
-  async update(_id: number, newUser: CreateUserDto) {
+  async update(_id: number, newUser: UpdateUserDto) {
     const user = await this.userRepository.findOne(_id);
 
     if (user === undefined || user === null) {

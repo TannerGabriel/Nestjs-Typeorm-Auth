@@ -13,6 +13,7 @@ import { UsersService } from './users.service';
 import { User } from './user.interface';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiUseTags, ApiResponse } from '@nestjs/swagger';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @ApiUseTags('users')
 @Controller('users')
@@ -53,7 +54,7 @@ export class UsersController {
   @ApiResponse({ status: 200, description: 'Fetched all users' })
   @ApiResponse({ status: 400, description: 'User not found' })
   @Put(':id')
-  async updateUser(@Param('id') id: number, @Body() user: CreateUserDto) {
+  async updateUser(@Param('id') id: number, @Body() user: UpdateUserDto) {
     return this.usersService.update(id, user);
   }
 
