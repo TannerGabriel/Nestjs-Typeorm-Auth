@@ -1,9 +1,7 @@
 <template>
   <div class="about">
     <b-alert variant="success" :show="success">Successfully registered</b-alert>
-    <b-alert variant="danger" :show="errorState">
-      {{errorMessage}}
-    </b-alert>
+    <b-alert variant="danger" :show="errorState">{{errorMessage}}</b-alert>
     <b-container class="auth-container">
       <b-form @submit="onSubmit" v-if="show">
         <b-form-group id="register" label-for="Register" label="Register">
@@ -25,7 +23,7 @@
           ></b-input>
           <b-input id="input-2" v-model="form.name" required placeholder="Enter name"></b-input>
         </b-form-group>
-        
+
         <b-button type="submit" variant="primary">Submit</b-button>
       </b-form>
     </b-container>
@@ -34,10 +32,10 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
-import axios from 'axios'
+import axios from "axios";
 
 @Component({
-  components: {},
+  components: {}
 })
 export default class Register extends Vue {
   form = {
@@ -48,21 +46,24 @@ export default class Register extends Vue {
   show = true;
   success = 0;
   errorState = 0;
-  errorMessage = ''
+  errorMessage = "";
 
   onSubmit(evt: Event) {
     evt.preventDefault();
-    axios.post('http://localhost:3000/users', this.form).then((response) => {
-      this.success = 2
-      console.log('test')
-      setTimeout(() => {
-        this.$router.push('/')
-        localStorage.token = response.data.token.token 
-      }, 2000);
-    }).catch((error) => {
-      this.errorMessage = `${error.message}: ${error.response.data.message}`
-      this.errorState = 4
-    })
+    axios
+      .post("http://localhost:3000/users", this.form)
+      .then(response => {
+        this.success = 2;
+        console.log("test");
+        setTimeout(() => {
+          this.$router.push("/");
+          localStorage.token = response.data.token.token;
+        }, 2000);
+      })
+      .catch(error => {
+        this.errorMessage = `${error.message}: ${error.response.data.message}`;
+        this.errorState = 4;
+      });
   }
 }
 </script>
@@ -73,14 +74,14 @@ export default class Register extends Vue {
   margin-top: 3rem;
   text-align: center;
   margin: 8rem auto 0;
-  box-shadow: 0 1rem 1rem 0 rgba(0, 0, 0, .15);
+  box-shadow: 0 1rem 1rem 0 rgba(0, 0, 0, 0.15);
   background: #fff;
   position: relative;
   padding: 6rem 4rem;
 }
 
 body {
-  background: #607D8B;
+  background: #607d8b;
 }
 
 input {

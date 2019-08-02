@@ -1,10 +1,13 @@
 <template>
   <section class="settings">
-    <b-alert variant="success" :show="success">Successfully logged in</b-alert>
+    <b-alert variant="success" :show="success">Successfully updated account</b-alert>
     <b-alert variant="danger" :show="errorState">{{errorMessage}}</b-alert>
     <b-container class="settings-container">
       <b-form @submit="onSubmit" v-if="show">
-        <b-form-group id="input-group-1" label="Your Settings" label-for="settings">
+        <b-form-group id="input-group-1" label-for="settings">
+          <h1>Your settings</h1>
+          <p>Change the details of your profile</p>
+          <b-form-input id="name" v-model="form.name" type="name" required placeholder="Full name"></b-form-input>
           <b-form-input
             id="email"
             v-model="form.email"
@@ -12,14 +15,6 @@
             required
             placeholder="Enter email"
           ></b-form-input>
-          <b-input
-            type="password"
-            id="text-password"
-            aria-describedby="password-help-block"
-            required
-            placeholder="Password"
-            v-model="form.password"
-          ></b-input>
         </b-form-group>
 
         <b-button type="submit" variant="primary">Submit</b-button>
@@ -31,7 +26,7 @@
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
 import axios from "axios";
-import { validateToken } from "../utils/checkToken";
+import { validateToken } from "../utils/userUtils";
 
 @Component({
   components: {}
@@ -45,18 +40,15 @@ export default class Login extends Vue {
   success = 0;
   errorState = 0;
   errorMessage = "";
+  userId = "";
 
   onSubmit(evt: Event) {
     evt.preventDefault();
     axios
-      .post("http://localhost:3000/auth", this.form)
+      .put(`http://localhost:3000/users/${this.userId}`, this.form)
       .then(response => {
         if (response.status == 201) {
           this.success = 2;
-          setTimeout(() => {
-            this.$router.push({ name: "home" });
-            localStorage.token = response.data.token;
-          }, 2000);
         } else {
           alert("Wrong credentials");
         }
@@ -70,6 +62,8 @@ export default class Login extends Vue {
   async mounted() {
     const state = await validateToken(localStorage.token);
     if (state != true) this.$router.push({ name: "login" });
+    else {
+    }
   }
 }
 </script>

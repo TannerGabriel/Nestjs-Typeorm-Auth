@@ -40,7 +40,7 @@ export default class Navbar extends Vue {}
 
 <style lang="scss">
 a {
-    text-decoration: none;
-    color: rgba(255, 255, 255, 0.5);
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.5);
 }
 </style>
