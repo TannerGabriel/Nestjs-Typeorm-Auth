@@ -3,18 +3,12 @@
     <b-alert variant="success" :show="success">Successfully updated account</b-alert>
     <b-alert variant="danger" :show="errorState">{{errorMessage}}</b-alert>
     <b-container class="settings-container">
+      <h1 class="page-heading">Your settings</h1>
       <b-form @submit="onSubmit" v-if="show">
         <b-form-group id="input-group-1" label-for="settings">
-          <h1>Your settings</h1>
           <p>Change the details of your profile</p>
-          <b-form-input id="name" v-model="form.name" type="name" required placeholder="Full name"></b-form-input>
-          <b-form-input
-            id="email"
-            v-model="form.email"
-            type="email"
-            required
-            placeholder="Enter email"
-          ></b-form-input>
+          <b-form-input id="name" v-model="form.name" type="name" :value="'test'" required></b-form-input>
+          <b-form-input id="email" v-model="form.email" type="email" required></b-form-input>
         </b-form-group>
 
         <b-button type="submit" variant="primary">Submit</b-button>
@@ -27,6 +21,7 @@
 import { Component, Vue, Prop } from "vue-property-decorator";
 import axios from "axios";
 import { Payload } from "../types/payload";
+import { User } from "../types/user";
 
 import {
   validateToken,
@@ -46,12 +41,12 @@ export default class Login extends Vue {
   success = 0;
   errorState = 0;
   errorMessage = "";
-  userId = "";
+  user: User;
 
   onSubmit(evt: Event) {
     evt.preventDefault();
     axios
-      .put(`http://localhost:3000/users/${this.userId}`, this.form)
+      .put(`http://localhost:3000/users/${this.user._id}`, this.form)
       .then(response => {
         if (response.status == 201) {
           this.success = 2;
@@ -67,11 +62,17 @@ export default class Login extends Vue {
 
   async mounted() {
     const state = await validateToken(localStorage.token);
+    console.log(state);
     if (state != true) this.$router.push({ name: "login" });
     else {
       const payload: Payload = await getPayloadFromToken(localStorage.token);
-      const user = await getUserInformation(payload.email, localStorage.token);
-      console.log(user);
+      console.log(payload.email);
+      const userResponse = await getUserInformation(
+        payload.email,
+        localStorage.token
+      );
+      this.user = userResponse.data;
+      console.log(this.user);
     }
   }
 }

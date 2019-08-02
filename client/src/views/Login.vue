@@ -73,28 +73,3 @@ export default class Login extends Vue {
   }
 }
 </script>
-
-<style lang="scss">
-.auth-container {
-  width: 400px;
-  margin-top: 3rem;
-  text-align: center;
-  margin: 8rem auto 0;
-  box-shadow: 0 1rem 1rem 0 rgba(0, 0, 0, 0.15);
-  background: #fff;
-  position: relative;
-  padding: 6rem 4rem;
-}
-
-body {
-  background: #607d8b;
-}
-
-input {
-  margin: 0.5rem;
-}
-
-label {
-  margin-bottom: 1rem;
-}
-</style>
