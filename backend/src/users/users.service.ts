@@ -52,6 +52,12 @@ export class UsersService {
   }
 
   async deleteUserById(id: number) {
+    const user = await this.userRepository.findOne({ _id: id });
+
+    if (user === undefined || user === null) {
+      throw new HttpException("User doesn't exists", HttpStatus.BAD_REQUEST);
+    }
+
     return await this.userRepository.delete(id);
   }
 
