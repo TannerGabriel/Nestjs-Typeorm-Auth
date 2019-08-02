@@ -79,7 +79,12 @@ export default class Profile extends Vue {
   success = 0;
   errorState = 0;
   errorMessage = "";
-  user: User;
+  user: User = {
+    _id: "",
+    username: "",
+    email: "",
+    password: ""
+  };
   active: string = "Profile";
 
   onSubmit(evt: Event) {
@@ -106,6 +111,7 @@ export default class Profile extends Vue {
       const payload: Payload = await getPayloadFromToken(localStorage.token);
       this.user = await getUserInformation(payload.email, localStorage.token);
       this.form.email = this.user.email;
+      this.form.name = this.user.username;
     }
   }
 

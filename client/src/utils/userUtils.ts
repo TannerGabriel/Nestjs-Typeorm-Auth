@@ -26,7 +26,6 @@ export async function getUserInformation(email: string, token: string): Promise<
       //   'Content-Type': 'application/json'
       // }
     });
-
     return response.data;
   } catch (err) {
     return err;

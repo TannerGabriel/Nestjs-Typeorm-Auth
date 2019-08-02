@@ -8,50 +8,54 @@ import { JwtPayloadService } from '../shared/jwt.payload.service';
 
 @Injectable()
 export class UsersService {
-    constructor(@InjectRepository(UserEntity) private readonly userRepository: Repository<UserEntity>,
-                private readonly jwtPayloadService: JwtPayloadService) {}
+  constructor(
+    @InjectRepository(UserEntity)
+    private readonly userRepository: Repository<UserEntity>,
+    private readonly jwtPayloadService: JwtPayloadService,
+  ) {}
 
-    async findAll(): Promise<User[]> {
-        return await this.userRepository.find();
+  async findAll(): Promise<User[]> {
+    return await this.userRepository.find();
+  }
+
+  async findOneByEmail(email): Promise<User> {
+    return await this.userRepository.findOne({ email });
+  }
+
+  async create(createUserDto: CreateUserDto) {
+    const user = await this.findOneByEmail(createUserDto.email);
+
+    if (user) {
+      throw new HttpException('User already exists', HttpStatus.BAD_REQUEST);
     }
 
-    async findOneByEmail(email): Promise<User> {
-        return await this.userRepository.findOne({email});
+    const newUser = new UserEntity();
+    newUser.email = createUserDto.email;
+    newUser.password = createUserDto.password;
+    newUser.username = createUserDto.username;
+
+    const userResponse = await this.userRepository.save(newUser);
+    const token = await this.jwtPayloadService.createJwtPayload(newUser);
+
+    return { userResponse, token };
+  }
+
+  async update(_id: number, newUser: CreateUserDto) {
+    const user = await this.userRepository.findOne(_id);
+
+    if (user === undefined || user === null) {
+      throw new HttpException("User doesn't exists", HttpStatus.BAD_REQUEST);
     }
 
-    async create(createUserDto: CreateUserDto) {
-        const user = await this.findOneByEmail(createUserDto.email);
+    await this.userRepository.merge(user, newUser);
+    return await this.userRepository.save(user);
+  }
 
-        if (user) {
-            throw new HttpException('User already exists', HttpStatus.BAD_REQUEST);
-        }
+  async deleteUserById(id: number) {
+    return await this.userRepository.delete(id);
+  }
 
-        const newUser = new UserEntity();
-        newUser.email = createUserDto.email;
-        newUser.password = createUserDto.password;
-
-        const userResponse = await this.userRepository.save(newUser);
-        const token = await this.jwtPayloadService.createJwtPayload(newUser);
-
-        return { userResponse, token };
-    }
-
-    async update(_id: number, newUser: CreateUserDto) {
-        const user = await this.userRepository.findOne(_id);
-
-        if (user === undefined || user === null) {
-            throw new HttpException('User doesn\'t exists', HttpStatus.BAD_REQUEST);
-        }
-
-        await this.userRepository.merge(user, newUser);
-        return await this.userRepository.save(user);
-    }
-
-    async deleteUserById(id: number) {
-        return await this.userRepository.delete(id);
-    }
-
-    async deleteAll() {
-        return await this.userRepository.clear();
-    }
+  async deleteAll() {
+    return await this.userRepository.clear();
+  }
 }
