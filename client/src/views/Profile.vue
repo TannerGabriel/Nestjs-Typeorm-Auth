@@ -19,7 +19,33 @@
           <b-form-input id="email" v-model="form.email" type="email" required></b-form-input>
         </b-form-group>
 
-        <b-button type="submit" variant="primary">Submit</b-button>
+        <b-button type="submit" variant="primary">Save</b-button>
+      </b-form>
+
+      <b-form @submit="onSubmit" v-if="show && active == 'Password'">
+        <b-form-group id="name" label-for="name" label="Password">
+          <b-input
+            type="password"
+            id="password"
+            aria-describedby="password-help-block"
+            required
+            placeholder="Password"
+            v-model="passwordForm.password"
+          ></b-input>
+        </b-form-group>
+
+        <b-form-group id="name" label-for="email" label="Confirm password">
+          <b-input
+            type="password"
+            id="secondPassword"
+            aria-describedby="password-help-block"
+            required
+            placeholder="Password"
+            v-model="passwordForm.secondPassword"
+          ></b-input>
+        </b-form-group>
+
+        <b-button type="submit" variant="primary">Save</b-button>
       </b-form>
     </b-container>
   </section>
@@ -40,11 +66,14 @@ import {
 @Component({
   components: {}
 })
-export default class Login extends Vue {
+export default class Profile extends Vue {
   form = {
     name: "",
-    email: "",
-    password: ""
+    email: ""
+  };
+  passwordForm = {
+    password: "",
+    secondPassword: ""
   };
   show = true;
   success = 0;
@@ -86,3 +115,8 @@ export default class Login extends Vue {
 }
 </script>
 
+<style lang="scss">
+body {
+  background: #fff;
+}
+</style>

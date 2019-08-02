@@ -1,5 +1,5 @@
 <template>
-  <div class="about">
+  <div class="register">
     <b-alert variant="success" :show="success">Successfully registered</b-alert>
     <b-alert variant="danger" :show="errorState">{{errorMessage}}</b-alert>
     <b-container class="auth-container">
