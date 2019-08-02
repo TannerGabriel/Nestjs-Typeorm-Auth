@@ -26,7 +26,13 @@
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
 import axios from "axios";
-import { validateToken } from "../utils/userUtils";
+import { Payload } from "../types/payload";
+
+import {
+  validateToken,
+  getUserInformation,
+  getPayloadFromToken
+} from "../utils/userUtils";
 
 @Component({
   components: {}
@@ -63,6 +69,9 @@ export default class Login extends Vue {
     const state = await validateToken(localStorage.token);
     if (state != true) this.$router.push({ name: "login" });
     else {
+      const payload: Payload = await getPayloadFromToken(localStorage.token);
+      const user = await getUserInformation(payload.email, localStorage.token);
+      console.log(user);
     }
   }
 }
