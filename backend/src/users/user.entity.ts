@@ -23,6 +23,9 @@ export class UserEntity {
   @Column()
   password: string;
 
+  @Column()
+  verified: boolean = false;
+
   @BeforeInsert()
   @BeforeUpdate()
   async hashPassword() {

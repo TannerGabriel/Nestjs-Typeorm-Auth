@@ -1,5 +1,11 @@
 import { ApiModelPropertyOptional } from '@nestjs/swagger';
-import { IsEmail, IsString, IsNotEmpty, IsOptional } from 'class-validator';
+import {
+  IsEmail,
+  IsString,
+  IsNotEmpty,
+  IsOptional,
+  IsBoolean,
+} from 'class-validator';
 
 export class UpdateUserDto {
   @ApiModelPropertyOptional()
@@ -18,4 +24,10 @@ export class UpdateUserDto {
   @IsNotEmpty()
   @IsOptional()
   readonly username: string;
+
+  @ApiModelPropertyOptional()
+  @IsBoolean()
+  @IsNotEmpty()
+  @IsOptional()
+  readonly verified: boolean;
 }
