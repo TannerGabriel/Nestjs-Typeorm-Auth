@@ -7,16 +7,21 @@ import { UsersModule } from '../users/users.module';
 import { PassportModule } from '@nestjs/passport';
 import { JwtPayloadService } from '../shared/jwt.payload.service';
 import 'dotenv/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { EmailVerificationEntity } from './entities/emailverification.entity';
 
 @Module({
-  imports: [PassportModule.register({ defaultStrategy: 'jwt', session: true }),
-  JwtModule.register({
-    secret: process.env.SECRET_KEY,
-    signOptions: {
-      expiresIn: 3600,
-    },
-  }),
-  UsersModule],
+  imports: [
+    PassportModule.register({ defaultStrategy: 'jwt', session: true }),
+    JwtModule.register({
+      secret: process.env.SECRET_KEY,
+      signOptions: {
+        expiresIn: 3600,
+      },
+    }),
+    TypeOrmModule.forFeature([EmailVerificationEntity]),
+    UsersModule,
+  ],
   controllers: [AuthController],
   providers: [AuthService, JwtStrategy, JwtPayloadService],
 })
