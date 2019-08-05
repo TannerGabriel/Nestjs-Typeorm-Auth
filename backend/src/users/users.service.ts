@@ -43,9 +43,18 @@ export class UsersService {
 
   async update(_id: number, newUser: UpdateUserDto) {
     const user = await this.userRepository.findOne(_id);
+    const userWithEmail = await this.userRepository.findOne({
+      email: newUser.email,
+    });
 
     if (user === undefined || user === null) {
       throw new HttpException("User doesn't exists", HttpStatus.BAD_REQUEST);
+    } else if (
+      userWithEmail !== null &&
+      userWithEmail !== undefined &&
+      newUser.email !== user.email
+    ) {
+      throw new HttpException('Email is already used', HttpStatus.BAD_REQUEST);
     }
 
     await this.userRepository.merge(user, newUser);
