@@ -22,11 +22,13 @@ describe('UserController (e2e)', () => {
   });
 
   const user: CreateUserDto = {
+    username: 'test',
     email: 'test1@test.com',
     password: '!somepassword123!',
   };
 
   const updatedUser: CreateUserDto = {
+    username: 'test123',
     email: 'deom@test.com',
     password: '!somenewgreatpassword123!',
   };
@@ -40,6 +42,7 @@ describe('UserController (e2e)', () => {
       .send(user)
       .expect(({ body }) => {
         expect(body.userResponse.email).toEqual(user.email);
+        expect(body.userResponse.username).toEqual(user.username);
         expect(body.userResponse._id).toBeDefined();
         expect(body.userResponse.password).toBeDefined();
         userId = body.userResponse._id;
@@ -58,10 +61,10 @@ describe('UserController (e2e)', () => {
 
   it('Should requect duplicated repo', () => {
     return request(app.getHttpServer())
-    .post('/users')
-    .set('Accept', 'application/json')
-    .send(user)
-    .expect(({ body }) => {
+      .post('/users')
+      .set('Accept', 'application/json')
+      .send(user)
+      .expect(({ body }) => {
         expect(body.message).toEqual('User already exists');
       })
       .expect(HttpStatus.BAD_REQUEST);
@@ -69,27 +72,29 @@ describe('UserController (e2e)', () => {
 
   it('get user', () => {
     return request(app.getHttpServer())
-    .get(`/users/get/${user.email}`)
-    .expect(200)
-    .expect(({body}) => {
+      .get(`/users/get/${user.email}`)
+      .expect(200)
+      .expect(({ body }) => {
         expect(body).toBeDefined();
         expect(body.email).toEqual(user.email);
         expect(body._id).toBeDefined();
         expect(body.password).toBeDefined();
-    });
+        expect(body.username).toBeDefined();
+      });
   });
 
   it('update user', () => {
     return request(app.getHttpServer())
-    .put(`/users/${userId}`)
-    .send(updatedUser)
-    .expect(200)
-    .expect(({body}) => {
+      .put(`/users/${userId}`)
+      .send(updatedUser)
+      .expect(200)
+      .expect(({ body }) => {
         expect(body).toBeDefined();
         expect(body.email).toEqual(updatedUser.email);
+        expect(body.username).toBe(updatedUser.username);
         expect(body._id).toBeDefined();
         expect(body.password).toBeDefined();
         expect(body.password).toBeDefined();
-    });
+      });
   });
 });
