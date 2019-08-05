@@ -15,7 +15,7 @@
           <b-form-input id="name" v-model="form.username" type="name" required></b-form-input>
         </b-form-group>
 
-        <b-form-group id="name" label-for="email" label="Email">
+        <b-form-group id="email" label-for="email" label="Email">
           <b-form-input id="email" v-model="form.email" type="email" required></b-form-input>
         </b-form-group>
 
@@ -23,7 +23,7 @@
       </b-form>
 
       <b-form @submit="onSubmit" v-if="show && active == 'Password'">
-        <b-form-group id="name" label-for="name" label="Password">
+        <b-form-group id="passwordGroup" label-for="password" label="Password">
           <b-input
             type="password"
             id="password"
@@ -34,7 +34,7 @@
           ></b-input>
         </b-form-group>
 
-        <b-form-group id="name" label-for="email" label="Confirm password">
+        <b-form-group id="secondPasswordGroup" label-for="secondPassword" label="Confirm password">
           <b-input
             type="password"
             id="secondPassword"
