@@ -140,7 +140,7 @@ export default class Profile extends Vue {
 </script>
 
 <style lang="scss">
-body {
+#app {
   background: #fff;
 }
 </style>

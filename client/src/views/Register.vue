@@ -1,7 +1,8 @@
 <template>
-  <div class="register">
+  <div class="auth">
     <b-alert variant="success" :show="success">Successfully registered</b-alert>
     <b-alert variant="danger" :show="errorState">{{errorMessage}}</b-alert>
+    <section class="register"></section>
     <b-container class="auth-container">
       <b-form @submit="onSubmit" v-if="show">
         <h2>Register</h2>
@@ -56,7 +57,6 @@ export default class Register extends Vue {
       .post("http://localhost:3000/users", this.form)
       .then(response => {
         this.success += 2;
-        console.log("test");
         setTimeout(() => {
           this.$router.push("/");
           localStorage.token = response.data.token.token;
@@ -71,4 +71,7 @@ export default class Register extends Vue {
 </script>
 
 <style lang="scss">
+.register {
+  padding-top: 8rem;
+}
 </style>

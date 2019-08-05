@@ -21,4 +21,7 @@ export default class Home extends Vue {
 </script>
 
 <style lang="scss">
+#app {
+  background: #fff;
+}
 </style>

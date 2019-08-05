@@ -1,8 +1,27 @@
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#app {
+    height: 100%;
+    align-items: center;
+    flex-direction: column;
+}
+
+.auth {
+    height: 100%;
+    background: #607d8b;
+}
+
+
 .auth-container {
     width: 400px;
     margin-top: 3rem;
     text-align: center;
-    margin: 8rem auto 0;
+    margin: 0rem auto 0;
     box-shadow: 0 1rem 1rem 0 rgba(0, 0, 0, 0.15);
     background: #fff;
     position: relative;
@@ -15,10 +34,6 @@
 
 .page-heading {
     margin: 2rem 0rem;
-}
-
-body {
-    background: #607d8b;
 }
 
 input {

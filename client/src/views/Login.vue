@@ -2,31 +2,33 @@
   <section class="auth">
     <b-alert variant="success" :show="success">Successfully logged in</b-alert>
     <b-alert variant="danger" :show="errorState">{{errorMessage}}</b-alert>
-    <b-container class="auth-container">
-      <b-form @submit="onSubmit" v-if="show">
-        <h2>Login</h2>
-        <b-form-group id="login" label-for="login">
-          <b-form-input
-            id="email"
-            v-model="form.email"
-            type="email"
-            required
-            placeholder="Enter email"
-          ></b-form-input>
-          <b-input
-            type="password"
-            id="text-password"
-            aria-describedby="password-help-block"
-            required
-            placeholder="Password"
-            v-model="form.password"
-          ></b-input>
-        </b-form-group>
+    <section class="signin">
+      <b-container class="auth-container">
+        <b-form @submit="onSubmit" v-if="show">
+          <h2>Login</h2>
+          <b-form-group id="login" label-for="login">
+            <b-form-input
+              id="email"
+              v-model="form.email"
+              type="email"
+              required
+              placeholder="Enter email"
+            ></b-form-input>
+            <b-input
+              type="password"
+              id="text-password"
+              aria-describedby="password-help-block"
+              required
+              placeholder="Password"
+              v-model="form.password"
+            ></b-input>
+          </b-form-group>
 
-        <b-button type="submit" variant="primary">Submit</b-button>
-        <router-link class="nav-link" to="/register">Don't have an account yet. Register instead</router-link>
-      </b-form>
-    </b-container>
+          <b-button type="submit" variant="primary">Submit</b-button>
+          <router-link class="nav-link" to="/register">Don't have an account yet. Register instead</router-link>
+        </b-form>
+      </b-container>
+    </section>
   </section>
 </template>
 
@@ -75,3 +77,9 @@ export default class Login extends Vue {
   }
 }
 </script>
+
+<style lang="scss">
+.signin {
+  padding-top: 8rem;
+}
+</style>
