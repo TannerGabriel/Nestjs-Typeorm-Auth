@@ -3,6 +3,7 @@ import {
   UnauthorizedException,
   HttpStatus,
   HttpException,
+  Logger,
 } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { LoginUserDto } from '../users/dto/login-user.dto';
@@ -90,51 +91,40 @@ export class AuthService {
     return false;
   }
 
-  async verifyEmail(token: string): Promise<boolean> {
-    const emailVerif = await this.emailVerificationRepository.findOne({
-      emailToken: token,
-    });
-    if (emailVerif && emailVerif.email) {
-      const userFromDb = await this.usersService.findOne({
-        email: emailVerif.email,
-      });
-      if (userFromDb) {
-        userFromDb.auth.email.valid = true;
-        const savedUser = await userFromDb.save();
-        // await emailVerif.remove();
-        return !!savedUser;
-      }
-    } else {
-      throw new HttpException(
-        'LOGIN.EMAIL_CODE_NOT_VALID',
-        HttpStatus.FORBIDDEN,
-      );
-    }
-  }
+  //   async verifyEmail(token: string): Promise<boolean> {
+  //     const emailVerif = await this.emailVerificationRepository.findOne({
+  //       emailToken: token,
+  //     });
+  //     if (emailVerif && emailVerif.email) {
+  //       const userFromDb = await this.usersService.findOneByEmail({
+  //         email: emailVerif.email,
+  //       });
+  //       if (userFromDb) {
+  //         userFromDb.auth.email.valid = true;
+  //         const savedUser = await userFromDb.save();
+  //         // await emailVerif.remove();
+  //         return !!savedUser;
+  //       }
+  //     } else {
+  //       throw new HttpException(
+  //         'LOGIN.EMAIL_CODE_NOT_VALID',
+  //         HttpStatus.FORBIDDEN,
+  //       );
+  //     }
+  //   }
 
   async sendEmailVerification(email: string) {
     const repository = await this.emailVerificationRepository.findOne({
       email,
     });
 
-    console.log(process.env.EMAIL_USER);
     if (repository && repository.emailToken) {
-      //   const transporter = nodemailer.createTransport({
-      //     host: process.env.EMAIL_HOST,
-      //     port: process.env.EMAIL_PORT,
-      //     secure: process.env.EMAIL_SECURE,
-      //     auth: {
-      //       user: process.env.EMAIL_USER,
-      //       pass: process.env.EMAIL_PASSWORD,
-      //     },
-      //   });
-
       const transporter = nodemailer.createTransport({
-        host: 'smtp.ethereal.email',
-        port: 587,
+        host: process.env.EMAIL_HOST,
+        port: process.env.EMAIL_PORT,
         auth: {
-          user: 'theodore.grant87@ethereal.email',
-          pass: 'FF5SPpjfn8ZMf3StWD',
+          user: process.env.EMAIL_USER,
+          pass: process.env.EMAIL_PASSWORD,
         },
       });
 
@@ -143,24 +133,23 @@ export class AuthService {
         to: email,
         subject: 'Verify Email',
         text: 'Verify Email',
-        html:
-          'Hi! <br><br> Thanks for your registration<br><br>' +
-          '<a href=' +
-          process.env.URL +
-          ':' +
-          process.env.PORT +
-          '/auth/email/verify/' +
-          repository.emailToken +
-          '>Click here to activate your account</a>',
+        html: `Hi! <br><br> Thanks for your registration<br><br>
+          <a href='${process.env.URL}:${process.env.PORT}/auth/email/verify/${repository.emailToken}'>Click here to activate your account</a>`,
       };
 
       const sent = await new Promise<boolean>(async (resolve, reject) => {
         return await transporter.sendMail(mailOptions, async (error, info) => {
           if (error) {
-            console.log('Message sent: %s', error);
+            Logger.log(
+              `Error while sending message: ${error}`,
+              'sendEmailVerification',
+            );
             return reject(false);
           }
-          console.log('Message sent: %s', info.messageId);
+          Logger.log(
+            `Send message: ${info.messageId}`,
+            'sendEmailVerification',
+          );
           resolve(true);
         });
       });
