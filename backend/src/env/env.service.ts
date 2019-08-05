@@ -7,7 +7,7 @@ export interface EnvData {
   APP_DEBUG: boolean;
 
   // database
-  DB_TYPE: 'mysql' | 'mariadb';
+  DB_TYPE: string;
   DB_HOST?: string;
   DB_NAME: string;
   DB_PORT?: number;
@@ -34,10 +34,10 @@ export class EnvService {
   }
 
   isDev(): boolean {
-    return (this.vars.APP_ENV === 'development');
+    return this.vars.APP_ENV === 'development';
   }
 
   isProd(): boolean {
-    return (this.vars.APP_ENV === 'production');
+    return this.vars.APP_ENV === 'production';
   }
 }
