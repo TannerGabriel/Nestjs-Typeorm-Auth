@@ -91,27 +91,29 @@ export class AuthService {
     return false;
   }
 
-  //   async verifyEmail(token: string): Promise<boolean> {
-  //     const emailVerif = await this.emailVerificationRepository.findOne({
-  //       emailToken: token,
-  //     });
-  //     if (emailVerif && emailVerif.email) {
-  //       const userFromDb = await this.usersService.findOneByEmail({
-  //         email: emailVerif.email,
-  //       });
-  //       if (userFromDb) {
-  //         userFromDb.auth.email.valid = true;
-  //         const savedUser = await userFromDb.save();
-  //         // await emailVerif.remove();
-  //         return !!savedUser;
-  //       }
-  //     } else {
-  //       throw new HttpException(
-  //         'LOGIN.EMAIL_CODE_NOT_VALID',
-  //         HttpStatus.FORBIDDEN,
-  //       );
-  //     }
-  //   }
+  async verifyEmail(token: string): Promise<boolean> {
+    const emailVerif = await this.emailVerificationRepository.findOne({
+      emailToken: token,
+    });
+    if (emailVerif && emailVerif.email) {
+      const userFromDb = await this.usersService.findOneByEmail(
+        emailVerif.email,
+      );
+      if (userFromDb) {
+        await this.usersService.update(userFromDb._id, {
+          verified: true,
+        });
+
+        await this.emailVerificationRepository.delete({ emailToken: token });
+        return true;
+      }
+    } else {
+      throw new HttpException(
+        'LOGIN.EMAIL_CODE_NOT_VALID',
+        HttpStatus.FORBIDDEN,
+      );
+    }
+  }
 
   async sendEmailVerification(email: string) {
     const repository = await this.emailVerificationRepository.findOne({

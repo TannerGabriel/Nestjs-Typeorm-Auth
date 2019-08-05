@@ -24,4 +24,9 @@ export class AuthController {
   async sendVerificationEmail(@Param('email') email: string) {
     return await this.authService.sendEmailVerification(email);
   }
+
+  @Get('email/verify/:token')
+  async verifyEmail(@Param('token') token: string) {
+    return await this.authService.verifyEmail(token);
+  }
 }

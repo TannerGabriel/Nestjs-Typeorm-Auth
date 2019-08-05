@@ -41,11 +41,13 @@ export class UsersService {
     return { userResponse, token };
   }
 
-  async update(_id: number, newUser: UpdateUserDto) {
+  async update(_id: number | string, newUser: UpdateUserDto) {
     const user = await this.userRepository.findOne(_id);
     const userWithEmail = await this.userRepository.findOne({
       email: newUser.email,
     });
+
+    console.log('Updating user');
 
     if (user === undefined || user === null) {
       throw new HttpException("User doesn't exists", HttpStatus.BAD_REQUEST);

@@ -11,23 +11,23 @@ export class UpdateUserDto {
   @ApiModelPropertyOptional()
   @IsEmail()
   @IsOptional()
-  readonly email: string;
+  readonly email?: string;
 
   @ApiModelPropertyOptional()
   @IsString()
   @IsNotEmpty()
   @IsOptional()
-  readonly password: string;
+  readonly password?: string;
 
   @ApiModelPropertyOptional()
   @IsString()
   @IsNotEmpty()
   @IsOptional()
-  readonly username: string;
+  readonly username?: string;
 
   @ApiModelPropertyOptional()
   @IsBoolean()
   @IsNotEmpty()
   @IsOptional()
-  readonly verified: boolean;
+  readonly verified?: boolean;
 }
