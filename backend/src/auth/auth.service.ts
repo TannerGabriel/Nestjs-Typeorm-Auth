@@ -117,21 +117,29 @@ export class AuthService {
       email,
     });
 
-    console.log(repository);
-
+    console.log(process.env.EMAIL_USER);
     if (repository && repository.emailToken) {
+      //   const transporter = nodemailer.createTransport({
+      //     host: process.env.EMAIL_HOST,
+      //     port: process.env.EMAIL_PORT,
+      //     secure: process.env.EMAIL_SECURE,
+      //     auth: {
+      //       user: process.env.EMAIL_USER,
+      //       pass: process.env.EMAIL_PASSWORD,
+      //     },
+      //   });
+
       const transporter = nodemailer.createTransport({
-        host: process.env.EMAIL_HOST,
-        port: process.env.EMAIL_PORT,
-        secure: process.env.EMAIL_SECURE,
+        host: 'smtp.ethereal.email',
+        port: 587,
         auth: {
-          user: process.env.EMAIL_USER,
-          pass: process.env.EMAIL_PASSWORD,
+          user: 'theodore.grant87@ethereal.email',
+          pass: 'FF5SPpjfn8ZMf3StWD',
         },
       });
 
       const mailOptions = {
-        from: '"Company" <' + process.env.USER + '>',
+        from: '"Company" <' + process.env.EMAIL_USER + '>',
         to: email,
         subject: 'Verify Email',
         text: 'Verify Email',
