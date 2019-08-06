@@ -73,7 +73,7 @@ describe('UserController (e2e)', () => {
 
   it('get user', () => {
     return request(app.getHttpServer())
-      .get(`/users/get/${user.email}`)
+      .get(`/users/email/${user.email}`)
       .expect(200)
       .expect(({ body }) => {
         expect(body).toBeDefined();

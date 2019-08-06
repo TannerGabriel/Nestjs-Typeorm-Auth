@@ -7,15 +7,13 @@ function DatabaseOrmModule(): DynamicModule {
     type: 'mongodb',
     host: '127.0.0.1',
     port: 27017,
-    database: 'vaptesting',
+    database: 'testing',
     entities: [join(__dirname, '/../**/**.entity{.ts,.js}')],
     synchronize: false,
   });
 }
 
 @Module({
-  imports: [
-    DatabaseOrmModule(),
-  ],
+  imports: [DatabaseOrmModule()],
 })
-export class DatabaseTestingModule { }
+export class DatabaseTestingModule {}

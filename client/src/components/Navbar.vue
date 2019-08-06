@@ -6,20 +6,6 @@
           <router-link class="nav-link" to="/">Home</router-link>
         </b-nav-item>
 
-        <b-nav-item-dropdown class="nav-link" text="File" right>
-          <b-dropdown-item href="#">New</b-dropdown-item>
-          <b-dropdown-item href="#">Open</b-dropdown-item>
-          <b-dropdown-item href="#">Save</b-dropdown-item>
-          <b-dropdown-item href="#">Save as</b-dropdown-item>
-        </b-nav-item-dropdown>
-
-        <b-nav-item-dropdown class="nav-link" text="Edit" right>
-          <b-dropdown-item href="#">Function</b-dropdown-item>
-          <b-dropdown-item href="#">Variable</b-dropdown-item>
-          <b-dropdown-item href="#">Remove</b-dropdown-item>
-          <b-dropdown-item href="#">Drop Results</b-dropdown-item>
-        </b-nav-item-dropdown>
-
         <b-nav-item>
           <router-link class="nav-link" to="/profile">Profile</router-link>
         </b-nav-item>

@@ -19,8 +19,10 @@ async function bootstrap() {
   );
 
   const options = new DocumentBuilder()
-    .setTitle('VaP backend')
-    .setDescription('Backend which saves VaP users and workspaces')
+    .setTitle('Backend')
+    .setDescription(
+      'Full user authentication system with roles, sessions and email verification',
+    )
     .setVersion('1.0')
     .build();
 

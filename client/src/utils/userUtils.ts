@@ -20,7 +20,7 @@ export async function validateToken(token: string): Promise<boolean> {
 
 export async function getUserInformation(email: string): Promise<User> {
   try {
-    const response = await axios.get(`http://localhost:3000/users/get/${email}`, {
+    const response = await axios.get(`http://localhost:3000/users/email/${email}`, {
       // headers: {
       //   Authorization: `Bearer ${token}`,
       //   'Content-Type': 'application/json'

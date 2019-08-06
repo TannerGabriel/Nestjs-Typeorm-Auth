@@ -27,7 +27,7 @@ export class UsersController {
   }
 
   @ApiResponse({ status: 200, description: 'Fetched specific user' })
-  @Get('get/:email')
+  @Get('email/:email')
   async getUserByEmail(@Param('email') email: string): Promise<User> {
     return this.usersService.findOneByEmail(email);
   }

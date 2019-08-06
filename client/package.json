@@ -1,7 +1,8 @@
 {
-  "name": "test-frontend",
+  "name": "frontend",
   "version": "0.1.0",
-  "private": true,
+  "author": "Gabriel Tanner",
+  "license": "MIT",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -43,5 +44,12 @@
     "ts-jest": "^23.0.0",
     "typescript": "^3.4.3",
     "vue-template-compiler": "^2.6.10"
-  }
+  },
+  "keywords": [
+    "Vuejs",
+    "Auth",
+    "Javascript",
+    "Axios",
+    "Authentification system"
+  ]
 }

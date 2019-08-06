@@ -1,8 +1,8 @@
 {
-  "name": "backend-test",
+  "name": "backend",
   "version": "0.0.1",
   "description": "",
-  "author": "",
+  "author": "Gabriel Tanner",
   "license": "MIT",
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
@@ -74,5 +74,14 @@
     },
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
-  }
+  },
+  "keywords": [
+    "Nestjs",
+    "Auth",
+    "Typescript",
+    "Typeorm",
+    "Authentification system",
+    "JWT",
+    "BCRYPT"
+  ]
 }
