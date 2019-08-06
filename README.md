@@ -11,35 +11,35 @@
 Clone the repository
 
 ```bash
-    git clone https://github.com/TannerGabriel/Nestjs-Typeorm-Auth.git
+git clone https://github.com/TannerGabriel/Nestjs-Typeorm-Auth.git
 ```
 
 Switch to the repo folder
 
 ```bash
-    cd Nestjs-Typeorm-Auth
+cd Nestjs-Typeorm-Auth
 ```
 
 Installing dependencies and starting the servers
 
 Backend:
 ```bash
-    cd backend
-    npm install
-    npm run start
+cd backend
+npm install
+npm run start
 ```
 
 Frontend:
 ```bash
-    cd client
-    npm install
-    npm run serve
+cd client
+npm install
+npm run serve
 ```
 
-The backend needs to be configurated using a .env file which needs to hold the following parameters
+The backend needs to be configurated using a .env file which needs to hold the following parameters.
 ```bash
 # Password encryption
-SECRET_KEY="7qZ9KfFGqk2VA4WATH"
+SECRET_KEY=
 
 # Database settings
 DB_TYPE=
@@ -50,6 +50,7 @@ DB_USER=
 DB_PASSWORD=
 
 # Email settings https://nodemailer.com/about/
+# Free SMTP accounts https://ethereal.email/
 EMAIL_HOST=
 EMAIL_PORT=
 EMAIL_SECURE=
@@ -61,9 +62,7 @@ PORT=3000
 URL="localhost"
 ```
 
-----------
-
-## Author
+# Author
 Gabriel Tanner
 
 ## Support me

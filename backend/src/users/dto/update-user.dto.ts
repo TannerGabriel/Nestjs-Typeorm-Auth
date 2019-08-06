@@ -39,5 +39,5 @@ export class UpdateUserDto {
   @IsNotEmpty()
   @IsEnum(UserRoles)
   @IsOptional()
-  readonly role: UserRoles;
+  readonly role?: UserRoles;
 }

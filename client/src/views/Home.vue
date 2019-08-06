@@ -1,6 +1,7 @@
 <template>
   <div v-if="show" class="home">
     <b-alert variant="danger" :show="errorState">{{errorMessage}}</b-alert>
+    <h1>Nestjs Typeorm Auth</h1>
   </div>
 </template>
 

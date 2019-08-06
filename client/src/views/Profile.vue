@@ -134,8 +134,6 @@ export default class Profile extends Vue {
   makeActive(navItemId: string) {
     this.active = navItemId;
   }
-
-  chooseDataToPush() {}
 }
 </script>
 
