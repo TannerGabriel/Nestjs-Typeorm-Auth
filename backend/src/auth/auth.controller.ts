@@ -27,12 +27,19 @@ export class AuthController {
     return await this.authService.validateUserByPassword(loginUserDto);
   }
 
+  @ApiResponse({
+    status: 200,
+    description: 'Successfully send verification code',
+  })
+  @ApiResponse({ status: 403, description: 'User not found' })
   @Get('email/resend-verification/:email')
   async sendEmailVerification(@Param('email') email: string) {
     await this.authService.createEmailToken(email);
     return await this.authService.sendEmailVerification(email);
   }
 
+  @ApiResponse({ status: 200, description: 'Successfully verified email' })
+  @ApiResponse({ status: 403, description: 'Invalid token' })
   @Get('email/verify/:token')
   async verifyEmail(
     @Param('token') token: string,

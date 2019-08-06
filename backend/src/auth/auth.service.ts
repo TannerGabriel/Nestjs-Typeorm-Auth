@@ -13,7 +13,7 @@ import { JwtPayload } from './interfaces/jwt-payload.interface';
 import { Repository } from 'typeorm';
 import { EmailVerificationEntity } from './entities/emailverification.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import * as nodemailer from 'nodemailer';
+import { transporter } from '../shared/email-constants';
 import 'dotenv/config';
 import { UserEntity } from '../users/user.entity';
 import { CreateUserDto } from '../users/dto/create-user.dto';
@@ -139,15 +139,6 @@ export class AuthService {
     });
 
     if (repository && repository.emailToken) {
-      const transporter = nodemailer.createTransport({
-        host: process.env.EMAIL_HOST,
-        port: process.env.EMAIL_PORT,
-        auth: {
-          user: process.env.EMAIL_USER,
-          pass: process.env.EMAIL_PASSWORD,
-        },
-      });
-
       const mailOptions = {
         from: '"Company" <' + process.env.EMAIL_USER + '>',
         to: email,
@@ -157,26 +148,25 @@ export class AuthService {
           <a href='${process.env.URL}:${process.env.PORT}/auth/email/verify/${repository.emailToken}'>Click here to activate your account</a>`,
       };
 
-      const sent = await new Promise<{}>(async (resolve, reject) => {
-        return await transporter.sendMail(mailOptions, async (error, info) => {
-          if (error) {
-            Logger.log(
-              `Error while sending message: ${error}`,
-              'sendEmailVerification',
-            );
-            return reject(error);
-          }
-          Logger.log(
-            `Send message: ${info.messageId}`,
-            'sendEmailVerification',
-          );
-          resolve({ message: 'Successfully send email' });
-        });
-      });
-
-      return sent;
+      return await this.sendEmail(mailOptions);
     } else {
       throw new HttpException('User not found', HttpStatus.FORBIDDEN);
     }
+  }
+
+  async sendEmail(mailOptions) {
+    return await new Promise<{}>(async (resolve, reject) => {
+      return await transporter.sendMail(mailOptions, async (error, info) => {
+        if (error) {
+          Logger.log(
+            `Error while sending message: ${error}`,
+            'sendEmailVerification',
+          );
+          return reject(error);
+        }
+        Logger.log(`Send message: ${info.messageId}`, 'sendEmailVerification');
+        resolve({ message: 'Successfully send email' });
+      });
+    });
   }
 }
