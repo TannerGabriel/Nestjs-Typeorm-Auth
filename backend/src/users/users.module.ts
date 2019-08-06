@@ -4,7 +4,6 @@ import { UsersService } from './users.service';
 import { PassportModule } from '@nestjs/passport';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEntity } from './user.entity';
-import { JwtPayloadService } from '../shared/jwt.payload.service';
 import { JwtModule } from '@nestjs/jwt';
 import 'dotenv/config';
 
@@ -20,7 +19,7 @@ import 'dotenv/config';
     }),
   ],
   controllers: [UsersController],
-  providers: [UsersService, JwtPayloadService],
+  providers: [UsersService],
   exports: [UsersService],
 })
 export class UsersModule {}

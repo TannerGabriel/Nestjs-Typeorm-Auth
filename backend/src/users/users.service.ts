@@ -2,9 +2,7 @@ import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from './user.entity';
 import { Repository } from 'typeorm';
-import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './user.interface';
-import { JwtPayloadService } from '../shared/jwt.payload.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
@@ -12,7 +10,6 @@ export class UsersService {
   constructor(
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
-    private readonly jwtPayloadService: JwtPayloadService,
   ) {}
 
   async findAll(): Promise<User[]> {
