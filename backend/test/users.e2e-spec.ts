@@ -37,7 +37,7 @@ describe('UserController (e2e)', () => {
 
   it('Create User', () => {
     return request(app.getHttpServer())
-      .post('/users')
+      .post('/auth/email/register')
       .set('Accept', 'application/json')
       .send(user)
       .expect(({ body }) => {
@@ -61,7 +61,7 @@ describe('UserController (e2e)', () => {
 
   it('Should requect duplicated repo', () => {
     return request(app.getHttpServer())
-      .post('/users')
+      .post('/auth/email/register')
       .set('Accept', 'application/json')
       .send(user)
       .expect(({ body }) => {

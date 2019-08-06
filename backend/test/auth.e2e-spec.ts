@@ -38,7 +38,7 @@ describe('UserController (e2e)', () => {
 
   it('Create User', () => {
     return request(app.getHttpServer())
-      .post('/users')
+      .post('/auth/email/register')
       .set('Accept', 'application/json')
       .send(user)
       .expect(({ body }) => {
@@ -63,7 +63,7 @@ describe('UserController (e2e)', () => {
 
   it('Login user', () => {
     return request(app.getHttpServer())
-      .post('/auth')
+      .post('/auth/email/login')
       .set('Accept', 'application/json')
       .send(loginUser)
       .expect(({ body }) => {

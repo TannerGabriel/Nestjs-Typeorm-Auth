@@ -13,7 +13,10 @@ export class AuthController {
   @ApiResponse({ status: 400, description: 'Bad request' })
   @Post('/email/register')
   async createUser(@Body() user: CreateUserDto) {
-    return this.authService.create(user);
+    const response = await this.authService.create(user);
+    const newUser = response.userResponse;
+    await this.authService.createEmailToken(newUser.email);
+    return await this.authService.sendEmailVerification(newUser.email);
   }
 
   @ApiResponse({ status: 200, description: 'Successfully logged in' })
@@ -25,11 +28,7 @@ export class AuthController {
 
   @Get('email/resend-verification/:email')
   async sendEmailVerification(@Param('email') email: string) {
-    return await this.authService.createEmailToken(email);
-  }
-
-  @Post(':email')
-  async sendVerificationEmail(@Param('email') email: string) {
+    await this.authService.createEmailToken(email);
     return await this.authService.sendEmailVerification(email);
   }
 
