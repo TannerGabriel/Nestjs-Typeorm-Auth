@@ -17,7 +17,11 @@ export class AuthController {
     const response = await this.authService.create(user);
     const newUser = response.userResponse;
     await this.authService.createEmailToken(newUser.email);
-    return await this.authService.sendEmailVerification(newUser.email);
+    const state = await this.authService.sendEmailVerification(newUser.email);
+    return {
+      ...response,
+      ...state,
+    };
   }
 
   @ApiResponse({ status: 200, description: 'Successfully logged in' })

@@ -4,13 +4,14 @@ import { DatabaseTestingModule } from '../src/database/database.testing.module';
 import { UsersModule } from '../src/users/users.module';
 import { CreateUserDto } from '../src/users/dto/create-user.dto';
 import { HttpStatus } from '@nestjs/common';
+import { AuthModule } from '../src/auth/auth.module';
 
 describe('UserController (e2e)', () => {
   let app;
 
   beforeAll(async () => {
     const module = await Test.createTestingModule({
-      imports: [DatabaseTestingModule, UsersModule],
+      imports: [DatabaseTestingModule, UsersModule, AuthModule],
     }).compile();
     app = module.createNestApplication();
     await app.init();
@@ -23,7 +24,7 @@ describe('UserController (e2e)', () => {
 
   const user: CreateUserDto = {
     username: 'test',
-    email: 'test1@test.com',
+    email: 'test@test.com',
     password: '!somepassword123!',
   };
 

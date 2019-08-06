@@ -7,7 +7,7 @@ import { HttpStatus } from '@nestjs/common';
 import { AuthModule } from '../src/auth/auth.module';
 import { LoginUserDto } from '../src/users/dto/login-user.dto';
 
-describe('UserController (e2e)', () => {
+describe('AuthController (e2e)', () => {
   let app;
 
   beforeAll(async () => {
@@ -25,12 +25,12 @@ describe('UserController (e2e)', () => {
 
   const user: CreateUserDto = {
     username: 'test',
-    email: 'test1@test.com',
+    email: 'test@test.com',
     password: '!somepassword123!',
   };
 
   const loginUser: LoginUserDto = {
-    email: 'test1@test.com',
+    email: 'test@test.com',
     password: '!somepassword123!',
   };
 
