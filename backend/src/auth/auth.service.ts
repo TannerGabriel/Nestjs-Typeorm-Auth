@@ -15,6 +15,8 @@ import { EmailVerificationEntity } from './entities/emailverification.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as nodemailer from 'nodemailer';
 import 'dotenv/config';
+import { UserEntity } from '../users/user.entity';
+import { CreateUserDto } from '../users/dto/create-user.dto';
 
 @Injectable()
 export class AuthService {
@@ -25,7 +27,27 @@ export class AuthService {
     private readonly emailVerificationRepository: Repository<
       EmailVerificationEntity
     >,
+    @InjectRepository(UserEntity)
+    private readonly userRepository: Repository<UserEntity>,
   ) {}
+
+  async create(createUserDto: CreateUserDto) {
+    const user = await this.usersService.findOneByEmail(createUserDto.email);
+
+    if (user) {
+      throw new HttpException('User already exists', HttpStatus.BAD_REQUEST);
+    }
+
+    const newUser = new UserEntity();
+    newUser.email = createUserDto.email;
+    newUser.password = createUserDto.password;
+    newUser.username = createUserDto.username;
+
+    const userResponse = await this.userRepository.save(newUser);
+    const token = await this.jwtPayloadService.createJwtPayload(newUser);
+
+    return { userResponse, token };
+  }
 
   async validateUserByPassword(loginUserDto: LoginUserDto) {
     const user = await this.usersService.findOneByEmail(loginUserDto.email);

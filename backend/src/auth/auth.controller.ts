@@ -2,11 +2,19 @@ import { Controller, Post, Body, Param, Get } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginUserDto } from '../users/dto/login-user.dto';
 import { ApiUseTags, ApiResponse } from '@nestjs/swagger';
+import { CreateUserDto } from '../users/dto/create-user.dto';
 
 @ApiUseTags('auth')
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
+
+  @ApiResponse({ status: 201, description: 'Successfully created user' })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @Post('/email/register')
+  async createUser(@Body() user: CreateUserDto) {
+    return this.authService.create(user);
+  }
 
   @ApiResponse({ status: 200, description: 'Successfully logged in' })
   @ApiResponse({ status: 401, description: 'Wrong credentials' })

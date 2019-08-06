@@ -53,7 +53,7 @@ export default class Register extends Vue {
   onSubmit(evt: Event) {
     evt.preventDefault();
     axios
-      .post("http://localhost:3000/users", this.form)
+      .post("http://localhost:3000/auth/email/register", this.form)
       .then(response => {
         this.success += 2;
         setTimeout(() => {

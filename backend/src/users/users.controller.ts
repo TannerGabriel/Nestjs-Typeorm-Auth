@@ -20,13 +20,6 @@ import { UpdateUserDto } from './dto/update-user.dto';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @ApiResponse({ status: 201, description: 'Successfully created user' })
-  @ApiResponse({ status: 400, description: 'Bad request' })
-  @Post()
-  async createUser(@Body() user: CreateUserDto) {
-    return this.usersService.create(user);
-  }
-
   @ApiResponse({ status: 200, description: 'Fetched all users' })
   @Get()
   async getAllUsers(): Promise<User[]> {
