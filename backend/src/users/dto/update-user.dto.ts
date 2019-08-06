@@ -33,7 +33,9 @@ export class UpdateUserDto {
   @IsOptional()
   readonly verified?: boolean;
 
-  @ApiModelPropertyOptional()
+  @ApiModelPropertyOptional({
+    enum: UserRoles,
+  })
   @IsNotEmpty()
   @IsEnum(UserRoles)
   @IsOptional()
