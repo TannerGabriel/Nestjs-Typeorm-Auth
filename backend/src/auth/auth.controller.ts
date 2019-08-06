@@ -1,8 +1,9 @@
-import { Controller, Post, Body, Param, Get } from '@nestjs/common';
+import { Controller, Post, Body, Param, Get, Response } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginUserDto } from '../users/dto/login-user.dto';
 import { ApiUseTags, ApiResponse } from '@nestjs/swagger';
 import { CreateUserDto } from '../users/dto/create-user.dto';
+import * as express from 'express';
 
 @ApiUseTags('auth')
 @Controller('auth')
@@ -33,7 +34,13 @@ export class AuthController {
   }
 
   @Get('email/verify/:token')
-  async verifyEmail(@Param('token') token: string) {
-    return await this.authService.verifyEmail(token);
+  async verifyEmail(
+    @Param('token') token: string,
+    @Response() response: express.Response,
+  ) {
+    const verified = await this.authService.verifyEmail(token);
+    if (verified) {
+      response.redirect('http://localhost:8080');
+    }
   }
 }
