@@ -2,9 +2,6 @@
 /dist
 /node_modules
 
-# Ignore files related to API keys
-.env
-
 # Logs
 logs
 *.log
@@ -12,6 +9,9 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
+
+# Ignore files related to API keys
+.env
 
 # OS
 .DS_Store

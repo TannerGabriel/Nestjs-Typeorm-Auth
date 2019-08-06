@@ -5,7 +5,9 @@ import {
   IsNotEmpty,
   IsOptional,
   IsBoolean,
+  IsEnum,
 } from 'class-validator';
+import { UserRoles } from '../../shared/user-roles';
 
 export class UpdateUserDto {
   @ApiModelPropertyOptional()
@@ -30,4 +32,10 @@ export class UpdateUserDto {
   @IsNotEmpty()
   @IsOptional()
   readonly verified?: boolean;
+
+  @ApiModelPropertyOptional()
+  @IsNotEmpty()
+  @IsEnum(UserRoles)
+  @IsOptional()
+  readonly role: UserRoles;
 }

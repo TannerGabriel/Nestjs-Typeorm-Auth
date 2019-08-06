@@ -7,8 +7,7 @@ import {
 } from 'typeorm';
 import { IsEmail } from 'class-validator';
 import * as bcrypt from 'bcrypt';
-
-const passwordHashedRegex = RegExp('\\$2[ayb]$[d]{2}$[./A-Za-z0-9]{53}');
+import { UserRoles } from '../shared/user-roles';
 
 @Entity('user')
 export class UserEntity {
@@ -27,6 +26,9 @@ export class UserEntity {
 
   @Column()
   verified: boolean = false;
+
+  @Column()
+  role: UserRoles = UserRoles.TEST;
 
   @BeforeInsert()
   @BeforeUpdate()
