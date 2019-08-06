@@ -125,7 +125,7 @@ export default class Profile extends Vue {
     if (state != true) this.$router.push({ name: "login" });
     else {
       const payload: Payload = await getPayloadFromToken(localStorage.token);
-      this.user = await getUserInformation(payload.email, localStorage.token);
+      this.user = await getUserInformation(payload.email);
       this.form.email = this.user.email;
       this.form.username = this.user.username;
     }

@@ -1,21 +1,34 @@
 <template>
   <div v-if="show" class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
+    <b-alert variant="danger" :show="errorState">{{errorMessage}}</b-alert>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import { validateToken } from "../utils/userUtils";
+import {
+  validateToken,
+  isVerified,
+  getPayloadFromToken
+} from "../utils/userUtils";
+import { Payload } from "../types/payload";
 
 @Component({})
 export default class Home extends Vue {
   show = false;
+  errorState = 0;
+  errorMessage = "Please verify your email address";
 
   async mounted() {
     const state = await validateToken(localStorage.token);
     if (state == false) this.$router.push({ name: "login" });
     else this.show = true;
+
+    const payload: Payload = await getPayloadFromToken(localStorage.token);
+    const verified = await isVerified(payload.email);
+    if (!verified) {
+      this.errorState += 6;
+    }
   }
 }
 </script>
