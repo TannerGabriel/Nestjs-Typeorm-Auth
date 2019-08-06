@@ -53,7 +53,7 @@ export default class Login extends Vue {
   onSubmit(evt: Event) {
     evt.preventDefault();
     axios
-      .post("http://localhost:3000/auth", this.form)
+      .post("http://localhost:3000/auth/email/login", this.form)
       .then(response => {
         if (response.status == 201) {
           this.success += 2;

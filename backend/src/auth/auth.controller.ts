@@ -10,7 +10,7 @@ export class AuthController {
 
   @ApiResponse({ status: 200, description: 'Successfully logged in' })
   @ApiResponse({ status: 401, description: 'Wrong credentials' })
-  @Post()
+  @Post('/email/login')
   async login(@Body() loginUserDto: LoginUserDto) {
     return await this.authService.validateUserByPassword(loginUserDto);
   }
