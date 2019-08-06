@@ -47,8 +47,6 @@ export class UsersService {
       email: newUser.email,
     });
 
-    console.log('Updating user');
-
     if (user === undefined || user === null) {
       throw new HttpException("User doesn't exists", HttpStatus.BAD_REQUEST);
     } else if (

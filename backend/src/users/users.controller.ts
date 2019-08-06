@@ -55,7 +55,6 @@ export class UsersController {
   @ApiResponse({ status: 400, description: 'User not found' })
   @Put(':id')
   async updateUser(@Param('id') id: number, @Body() user: UpdateUserDto) {
-    console.log(id);
     return this.usersService.update(id, user);
   }
 

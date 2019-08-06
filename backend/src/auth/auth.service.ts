@@ -29,7 +29,6 @@ export class AuthService {
 
   async validateUserByPassword(loginUserDto: LoginUserDto) {
     const user = await this.usersService.findOneByEmail(loginUserDto.email);
-
     if (!user) {
       throw new UnauthorizedException('User does not exist');
     }
@@ -108,10 +107,7 @@ export class AuthService {
         return true;
       }
     } else {
-      throw new HttpException(
-        'LOGIN.EMAIL_CODE_NOT_VALID',
-        HttpStatus.FORBIDDEN,
-      );
+      throw new HttpException('Invalid token', HttpStatus.FORBIDDEN);
     }
   }
 
@@ -139,29 +135,26 @@ export class AuthService {
           <a href='${process.env.URL}:${process.env.PORT}/auth/email/verify/${repository.emailToken}'>Click here to activate your account</a>`,
       };
 
-      const sent = await new Promise<boolean>(async (resolve, reject) => {
+      const sent = await new Promise<{}>(async (resolve, reject) => {
         return await transporter.sendMail(mailOptions, async (error, info) => {
           if (error) {
             Logger.log(
               `Error while sending message: ${error}`,
               'sendEmailVerification',
             );
-            return reject(false);
+            return reject(error);
           }
           Logger.log(
             `Send message: ${info.messageId}`,
             'sendEmailVerification',
           );
-          resolve(true);
+          resolve({ message: 'Successfully send email' });
         });
       });
 
       return sent;
     } else {
-      throw new HttpException(
-        'REGISTER.USER_NOT_REGISTERED',
-        HttpStatus.FORBIDDEN,
-      );
+      throw new HttpException('User not found', HttpStatus.FORBIDDEN);
     }
   }
 }
