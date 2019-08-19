@@ -1,5 +1,6 @@
 import * as dotenv from 'dotenv';
 import * as fs from 'fs';
+import { Injectable } from '@nestjs/common';
 
 export interface EnvData {
   // application
@@ -15,6 +16,7 @@ export interface EnvData {
   DB_PASSWORD: string;
 }
 
+@Injectable()
 export class EnvService {
   private vars: EnvData;
 

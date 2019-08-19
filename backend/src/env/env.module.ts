@@ -3,12 +3,7 @@ import { EnvService } from './env.service';
 
 @Global()
 @Module({
-  providers: [
-    {
-      provide: EnvService,
-      useValue: new EnvService(),
-    },
-  ],
+  providers: [EnvService],
   exports: [EnvService],
 })
 export class EnvModule {}
