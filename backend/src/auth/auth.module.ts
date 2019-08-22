@@ -10,6 +10,7 @@ import 'dotenv/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { EmailVerificationEntity } from './entities/emailverification.entity';
 import { UserEntity } from '../users/user.entity';
+import { EXPIRES_IN } from '../shared/constants';
 
 @Module({
   imports: [
@@ -17,7 +18,7 @@ import { UserEntity } from '../users/user.entity';
     JwtModule.register({
       secret: process.env.SECRET_KEY,
       signOptions: {
-        expiresIn: 3600,
+        expiresIn: EXPIRES_IN,
       },
     }),
     TypeOrmModule.forFeature([EmailVerificationEntity, UserEntity]),

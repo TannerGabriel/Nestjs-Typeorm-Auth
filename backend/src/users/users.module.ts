@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEntity } from './user.entity';
 import { JwtModule } from '@nestjs/jwt';
 import 'dotenv/config';
+import { EXPIRES_IN } from '../shared/constants';
 
 @Module({
   imports: [
@@ -14,7 +15,7 @@ import 'dotenv/config';
     JwtModule.register({
       secret: process.env.SECRET_KEY,
       signOptions: {
-        expiresIn: 3600,
+        expiresIn: EXPIRES_IN,
       },
     }),
   ],
