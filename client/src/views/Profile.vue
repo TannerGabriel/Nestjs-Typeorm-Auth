@@ -12,7 +12,7 @@
 
       <b-form @submit="onSubmit" v-if="show && active == 'Profile'">
         <b-form-group id="name" label-for="name" label="Name">
-          <b-form-input id="name" v-model="form.username" type="name" required></b-form-input>
+          <b-form-input id="name" v-model="form.username" type="text" required></b-form-input>
         </b-form-group>
 
         <b-form-group id="email" label-for="email" label="Email">
