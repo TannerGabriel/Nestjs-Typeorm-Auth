@@ -16,7 +16,7 @@
     "bootstrap-vue": "2.0.0-rc.27",
     "core-js": "2.6.9",
     "jwt-decode": "2.2.0",
-    "portal-vue": "2.1.5",
+    "portal-vue": "2.1.6",
     "vue": "2.6.10",
     "vue-class-component": "7.1.0",
     "vue-property-decorator": "8.2.1",
