@@ -20,7 +20,5 @@ jobs:
             - checkout:
 
             - run: cd backend && yarn install
-            # run tests!
-            - run: cd backend && yarn test
             # run e2e tests
             - run: cd backend && yarn test:e2e
