@@ -32,7 +32,7 @@
     "class-validator": "0.10.2",
     "dotenv": "8.0.0",
     "express-rate-limit": "5.0.0",
-    "helmet": "3.20.0",
+    "helmet": "3.21.2",
     "mongodb": "3.3.3",
     "nodemailer": "6.3.0",
     "passport": "0.4.0",
