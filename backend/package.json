@@ -42,7 +42,7 @@
     "rimraf": "2.6.3",
     "rxjs": "6.5.2",
     "swagger-ui-express": "4.0.7",
-    "typeorm": "0.2.18"
+    "typeorm": "0.2.20"
   },
   "devDependencies": {
     "@nestjs/testing": "6.5.3",
