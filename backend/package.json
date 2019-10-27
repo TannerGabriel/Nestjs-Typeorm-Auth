@@ -41,7 +41,7 @@
     "reflect-metadata": "0.1.13",
     "rimraf": "2.6.3",
     "rxjs": "6.5.2",
-    "swagger-ui-express": "4.0.7",
+    "swagger-ui-express": "4.1.2",
     "typeorm": "0.2.18"
   },
   "devDependencies": {
