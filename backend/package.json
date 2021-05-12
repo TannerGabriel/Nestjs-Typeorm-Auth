@@ -34,7 +34,7 @@
     "express-rate-limit": "5.0.0",
     "helmet": "3.20.0",
     "mongodb": "3.3.5",
-    "nodemailer": "6.3.1",
+    "nodemailer": "6.4.16",
     "passport": "0.4.0",
     "passport-jwt": "4.0.0",
     "pg": "7.12.1",
